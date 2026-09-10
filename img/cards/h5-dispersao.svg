@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Gráfico de dispersão para relação">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<path d="M24 108V45M24 108h274" stroke="#71849a" stroke-width="1.5"/><g fill="#e89a3c"><circle cx="52" cy="97" r="5"/><circle cx="82" cy="91" r="5"/><circle cx="111" cy="82" r="5"/><circle cx="147" cy="78" r="5"/><circle cx="177" cy="66" r="5"/><circle cx="221" cy="56" r="5"/><circle cx="269" cy="42" r="5"/></g><path d="M44 101L278 38" stroke="#f3c58d" stroke-width="1.5" stroke-dasharray="4 4"/><text x="24" y="39" fill="#93a3b8" font-family="Arial" font-size="9">PERMANÊNCIA × VOLUME</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

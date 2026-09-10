@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Agrupamento visual">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="18" y="44" width="136" height="72" rx="11" fill="#15372a"/><text x="30" y="61" fill="#a8dcbc" font-family="Arial" font-size="9" font-weight="700">OPERAÇÃO</text><text x="30" y="83" fill="#fff" font-family="Arial" font-size="18" font-weight="800">82%</text><text x="82" y="83" fill="#dce8f6" font-family="Arial" font-size="11">ocupação</text><text x="30" y="104" fill="#fff" font-family="Arial" font-size="18" font-weight="800">14</text><text x="62" y="104" fill="#dce8f6" font-family="Arial" font-size="11">navios</text><rect x="166" y="44" width="136" height="72" rx="11" fill="#132a3e"/><text x="178" y="61" fill="#8fa5b9" font-family="Arial" font-size="9" font-weight="700">DESEMPENHO</text><text x="178" y="83" fill="#fff" font-family="Arial" font-size="18" font-weight="800">72</text><text x="210" y="83" fill="#dce8f6" font-family="Arial" font-size="11">mov/h</text><text x="178" y="104" fill="#fff" font-family="Arial" font-size="18" font-weight="800">4,2h</text><text x="229" y="104" fill="#dce8f6" font-family="Arial" font-size="11">espera</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#50C878"/>
+</svg>

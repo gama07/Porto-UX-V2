@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Tamanho de alvos e espaçamento">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="25" y="48" width="54" height="54" rx="12" fill="#2f1e24" stroke="#e45d5d" stroke-width="2"/><text x="52" y="80" fill="#fff" font-family="Arial" font-size="12" text-anchor="middle">44+</text><path d="M97 75h32" stroke="#71849a" stroke-width="2" stroke-dasharray="4 3"/><rect x="147" y="48" width="54" height="54" rx="12" fill="#2f1e24" stroke="#e45d5d" stroke-width="2"/><text x="174" y="80" fill="#fff" font-family="Arial" font-size="12" text-anchor="middle">44+</text><path d="M219 75h32" stroke="#71849a" stroke-width="2" stroke-dasharray="4 3"/><rect x="267" y="59" width="28" height="28" rx="7" fill="#132a3e" opacity=".6"/><text x="281" y="77" fill="#71849a" font-family="Arial" font-size="8" text-anchor="middle">X</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E45D5D"/>
+</svg>

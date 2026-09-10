@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Linguagem clara">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="20" y="45" width="280" height="67" rx="10" fill="#132a3e"/><text x="32" y="62" fill="#e45d5d" font-family="Arial" font-size="9" font-weight="700">EVITE</text><text x="32" y="79" fill="#71849a" font-family="Arial" font-size="10">TME / SLA / ETA sem contexto</text><text x="32" y="97" fill="#50c878" font-family="Arial" font-size="9" font-weight="700">PREFIRA</text><text x="91" y="97" fill="#dce8f6" font-family="Arial" font-size="10">Tempo médio de espera · 4,2 h</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E45D5D"/>
+</svg>

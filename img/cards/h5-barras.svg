@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Gráfico de barras para comparação">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="20" y="45.0" width="24" height="62.0" rx="4" fill="#E89A3C" opacity="0.55"/><text x="32" y="121" fill="#93a3b8" font-family="Arial,sans-serif" font-size="9" font-weight="500" text-anchor="middle">A</text><rect x="66" y="60.8780487804878" width="24" height="46.1" rx="4" fill="#E89A3C" opacity="0.67"/><text x="78" y="121" fill="#93a3b8" font-family="Arial,sans-serif" font-size="9" font-weight="500" text-anchor="middle">B</text><rect x="112" y="71.46341463414635" width="24" height="35.5" rx="4" fill="#E89A3C" opacity="0.79"/><text x="124" y="121" fill="#93a3b8" font-family="Arial,sans-serif" font-size="9" font-weight="500" text-anchor="middle">C</text><rect x="158" y="80.53658536585365" width="24" height="26.5" rx="4" fill="#E89A3C" opacity="0.91"/><text x="170" y="121" fill="#93a3b8" font-family="Arial,sans-serif" font-size="9" font-weight="500" text-anchor="middle">D</text><text x="20" y="42" fill="#93a3b8" font-family="Arial,sans-serif" font-size="9" font-weight="700" text-anchor="start">MOVIMENTAÇÃO POR TERMINAL (mil t)</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

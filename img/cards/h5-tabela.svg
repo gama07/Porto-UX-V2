@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Tabela para detalhamento">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<text x="20" y="45" fill="#93a3b8" font-family="Arial" font-size="9">DETALHAMENTO</text><rect x="20" y="53" width="280" height="58" rx="8" fill="#132a3e"/><path d="M20 72h280M20 91h280M118 53v58M218 53v58" stroke="#294158"/><text x="30" y="67" fill="#8fa5b9" font-family="Arial" font-size="8">NAVIO</text><text x="128" y="67" fill="#8fa5b9" font-family="Arial" font-size="8">TERMINAL</text><text x="228" y="67" fill="#8fa5b9" font-family="Arial" font-size="8">ESPERA</text><text x="30" y="86" fill="#eaf2ff" font-family="Arial" font-size="9">Atlas</text><text x="128" y="86" fill="#eaf2ff" font-family="Arial" font-size="9">A</text><text x="228" y="86" fill="#eaf2ff" font-family="Arial" font-size="9">3,8 h</text><text x="30" y="105" fill="#eaf2ff" font-family="Arial" font-size="9">Orion</text><text x="128" y="105" fill="#eaf2ff" font-family="Arial" font-size="9">B</text><text x="228" y="105" fill="#eaf2ff" font-family="Arial" font-size="9">5,1 h</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

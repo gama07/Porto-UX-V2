@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Feedback de interação">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="20" y="46" width="120" height="32" rx="8" fill="#9b59b6"/><text x="80" y="66" fill="#fff" font-family="Arial" font-size="11" font-weight="700" text-anchor="middle">Aplicar filtro</text><path d="M154 62h27" stroke="#71849a" stroke-width="2"/><circle cx="194" cy="62" r="12" fill="none" stroke="#9b59b6" stroke-width="3" stroke-dasharray="16 8"/><path d="M218 61l7 7 15-17" fill="none" stroke="#50c878" stroke-width="3"/><text x="252" y="66" fill="#dce8f6" font-family="Arial" font-size="10">Atualizado</text><text x="20" y="102" fill="#93a3b8" font-family="Arial" font-size="10">ação → carregamento → resposta</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#9B59B6"/>
+</svg>

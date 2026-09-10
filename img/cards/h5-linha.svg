@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Gráfico de linhas para tendência">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<path d="M24 108V49M24 108h274" stroke="#71849a" stroke-width="1.5"/><polyline points="36,97 74,90 112,92 150,74 188,80 226,60 264,68 291,52" fill="none" stroke="#e89a3c" stroke-width="3"/><circle cx="226" cy="60" r="4" fill="#e89a3c"/><text x="238" y="57" fill="#f2c38b" font-family="Arial" font-size="9">Greve</text><text x="24" y="43" fill="#93a3b8" font-family="Arial" font-size="9">ESPERA (h) · JAN–AGO</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

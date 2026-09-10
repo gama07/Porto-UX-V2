@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Composição e proporção">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<circle cx="80" cy="77" r="31" fill="none" stroke="#1d3144" stroke-width="16"/><circle cx="80" cy="77" r="31" fill="none" stroke="#e89a3c" stroke-width="16" stroke-dasharray="105 90" transform="rotate(-90 80 77)"/><text x="80" y="81" fill="#fff" font-family="Arial" font-size="14" font-weight="800" text-anchor="middle">54%</text><rect x="140" y="52" width="150" height="18" rx="6" fill="#1d3144"/><rect x="140" y="52" width="81" height="18" rx="6" fill="#e89a3c"/><text x="140" y="88" fill="#dce8f6" font-family="Arial" font-size="10">Contêiner 54% · Granel 46%</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

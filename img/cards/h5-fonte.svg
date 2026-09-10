@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Atualidade, fonte e incerteza">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="20" y="46" width="280" height="66" rx="10" fill="#132a3e"/><text x="32" y="63" fill="#93a3b8" font-family="Arial" font-size="9">ATUALIZAÇÃO</text><text x="32" y="80" fill="#fff" font-family="Arial" font-size="11" font-weight="700">01/09/2026 · 22:30</text><text x="32" y="99" fill="#93a3b8" font-family="Arial" font-size="9">FONTE</text><text x="76" y="99" fill="#dce8f6" font-family="Arial" font-size="9">ANTAQ · Painel Estatístico Aquaviário</text><rect x="224" y="59" width="61" height="26" rx="12" fill="#342a1c"/><text x="254" y="76" fill="#f2c38b" font-family="Arial" font-size="9" font-weight="700" text-anchor="middle">estimado</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

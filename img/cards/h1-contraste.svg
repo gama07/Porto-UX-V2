@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Contraste e separação visual">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="20" y="46" width="132" height="64" rx="10" fill="#071521"/><text x="32" y="70" fill="#fff" font-family="Arial" font-size="13" font-weight="700">Berço 03</text><text x="32" y="94" fill="#c7d8e8" font-family="Arial" font-size="11">Ocupado · 82%</text><rect x="168" y="46" width="132" height="64" rx="10" fill="#eef4f8"/><text x="180" y="70" fill="#0d1b2a" font-family="Arial" font-size="13" font-weight="700">Berço 04</text><text x="180" y="94" fill="#415a77" font-family="Arial" font-size="11">Livre · 0%</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#4A90E2"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Redundância à cor">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="22" y="47" width="132" height="54" rx="10" fill="#18372b"/><circle cx="44" cy="66" r="7" fill="#50c878"/><path d="M40 66l3 3 6-7" fill="none" stroke="#fff" stroke-width="2"/><text x="58" y="70" fill="#eaf2ff" font-family="Arial" font-size="11" font-weight="700">Normal</text><rect x="166" y="47" width="132" height="54" rx="10" fill="#3b2025"/><path d="M188 58l9 16h-18z" fill="#e45d5d"/><text x="207" y="70" fill="#eaf2ff" font-family="Arial" font-size="11" font-weight="700">Alerta</text><text x="22" y="118" fill="#93a3b8" font-family="Arial" font-size="10">não depender somente da cor</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E45D5D"/>
+</svg>

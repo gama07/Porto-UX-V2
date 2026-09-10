@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PortoUX: framework heurístico para design e avaliação de dashboards no contexto portuário.">
+  <title>PortoUX | Framework para Design e Avaliação de Dashboards no Contexto Portuário</title>
+  <link rel="stylesheet" href="./mani-porto.css?v=5.18">
+  <script src="v2-data-porto.js"></script>
+  <script src="https://cdn.userway.org/widget.js" data-account="09FcxZNn6a"></script>
+</head>
+<body>
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+  </div>
+
+  <main class="page-shell">
+    <header class="framework-header">
+      <img src="img/portoux-logo.png" alt="PortoUX — Framework para Design e Avaliação de Dashboards no Contexto Portuário" class="brand-logo-image">
+      <h1 class="sr-only">PortoUX</h1>
+    </header>
+
+
+    <section id="dimensions" class="dimensions-section" aria-label="Dimensões do Framework PortoUX">
+      <div id="timeline-container" class="sticky-dimensions"></div>
+      <div id="info-panel" aria-live="polite"></div>
+    </section>
+
+    <footer class="site-footer">
+      <span>PortoUX © 2026</span>
+      <span class="footer-separator" aria-hidden="true">•</span>
+      <span>Desenvolvido por <strong>Bruna Lorena S. Gama</strong></span>
+      <a class="footer-linkedin" href="https://www.linkedin.com/in/brunalorenatech/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Bruna Lorena S. Gama" title="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.2H3.3V20h3.2V8.2ZM4.9 3A1.9 1.9 0 1 0 5 6.8 1.9 1.9 0 0 0 4.9 3ZM20.7 13.2c0-3.5-1.9-5.2-4.4-5.2-2 0-2.9 1.1-3.4 1.9V8.2H9.7V20h3.2v-5.8c0-1.5.3-3 2.2-3s2 1.7 2 3.1V20h3.2l.4-6.8Z"/></svg>
+      </a>
+    <div class="icon-credit">Ícones por Freepik, Anggara, zky.icon e Flat Icons via <a href="https://www.flaticon.com/br/" target="_blank" rel="noopener noreferrer">Flaticon</a>.</div></footer>
+  </main>
+
+  <div id="image-modal" class="image-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-caption">
+    <div class="image-modal-content" tabindex="-1">
+      <button type="button" class="image-modal-close" aria-label="Fechar exemplo">×</button>
+      <img src="" alt="Exemplo aplicado da dimensão" class="image-modal-img">
+      <p id="modal-caption" class="image-modal-caption"></p>
+    </div>
+  </div>
+
+  <script>
+    const plotCategories = catData.categories;
+    let currentOpenCategory = null;
+    let lastModalTrigger = null;
+
+    const ICONS = {
+      'Paleta Semântica do Porto': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="16" width="14" height="32" rx="3" fill="#1f6fe5"/><rect x="25" y="16" width="14" height="32" rx="3" fill="#e89a3c"/><rect x="42" y="16" width="14" height="32" rx="3" fill="#50c878"/><path d="M13 39l3 3 6-8" fill="none" stroke="#fff" stroke-width="2.5"/></svg>`,
+      'Tipografia e Legibilidade': `<svg viewBox="0 0 64 64" aria-hidden="true"><text x="9" y="48" font-size="42" font-family="Inter,sans-serif" font-weight="800" fill="#eaf2ff">Aa</text></svg>`,
+      'Contraste e Separação Visual': `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="#0d1b2a" stroke="#93a3b8" stroke-width="2"/><path d="M32 10a22 22 0 0 1 0 44z" fill="#eaf2ff"/></svg>`,
+      'Redução de Ruído Visual': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 52V12M10 52h44" stroke="#93a3b8" stroke-width="2" fill="none"/><rect x="16" y="32" width="8" height="20" fill="#2a6bff"/><rect x="29" y="22" width="8" height="30" fill="#2a6bff"/><rect x="42" y="39" width="8" height="13" fill="#2a6bff"/><path d="M46 12l8 8m0-8l-8 8" stroke="#e45d5d" stroke-width="3"/></svg>`,
+      'Codificação Visual Consistente': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="12" width="16" height="16" rx="4" fill="none" stroke="#eaf2ff" stroke-width="2.5"/><rect x="39" y="12" width="16" height="16" rx="4" fill="none" stroke="#eaf2ff" stroke-width="2.5"/><circle cx="17" cy="44" r="8" fill="none" stroke="#eaf2ff" stroke-width="2.5"/><circle cx="47" cy="44" r="8" fill="none" stroke="#eaf2ff" stroke-width="2.5"/></svg>`,
+      'Espaçamento e Respiro': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="10" width="48" height="44" rx="5" fill="none" stroke="#93a3b8" stroke-width="2"/><rect x="16" y="18" width="32" height="10" rx="2" fill="#2a6bff" opacity=".65"/><rect x="16" y="38" width="32" height="8" rx="2" fill="#2a6bff" opacity=".35"/></svg>`,
+      'Indicadores Prioritários em Destaque': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="7" y="10" width="50" height="44" rx="5" fill="none" stroke="#93a3b8" stroke-width="2"/><rect x="13" y="16" width="10" height="12" rx="2" fill="#50c878"/><rect x="27" y="16" width="10" height="12" rx="2" fill="#50c878" opacity=".8"/><rect x="41" y="16" width="10" height="12" rx="2" fill="#50c878" opacity=".6"/><path d="M14 38h35M14 45h24" stroke="#eaf2ff" stroke-width="2"/></svg>`,
+      'Fluxo Visão → Filtro → Detalhe': `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="13" cy="32" r="6" fill="#50c878"/><circle cx="32" cy="32" r="8" fill="#50c878" opacity=".75"/><circle cx="52" cy="32" r="10" fill="#50c878" opacity=".45"/><path d="M19 32h5m16 0h3" stroke="#eaf2ff" stroke-width="2" stroke-dasharray="3 3"/></svg>`,
+      'Rótulos e Alinhamento': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 18h22M12 32h15M12 46h28M52 18H41M52 32H37M52 46H44" stroke="#eaf2ff" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+      'Agrupamento Visual': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="8" width="24" height="48" rx="4" fill="#50c878" opacity=".24"/><rect x="36" y="8" width="20" height="20" rx="4" fill="#50c878" opacity=".38"/><rect x="36" y="36" width="20" height="20" rx="4" fill="#50c878" opacity=".38"/></svg>`,
+      'Estrutura em Camadas ou Abas': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 52V19a5 5 0 0 1 5-5h11v-4h16v4h11a5 5 0 0 1 5 5v33z" fill="#50c878" opacity=".22" stroke="#eaf2ff" stroke-width="2"/><path d="M24 14h16" stroke="#50c878" stroke-width="3"/></svg>`,
+      'Densidade Informacional Controlada': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="8" width="21" height="21" rx="3" fill="#50c878" opacity=".3"/><rect x="35" y="8" width="21" height="21" rx="3" fill="#50c878" opacity=".5"/><rect x="8" y="35" width="21" height="21" rx="3" fill="#50c878" opacity=".5"/><rect x="35" y="35" width="21" height="21" rx="3" fill="#50c878" opacity=".3"/></svg>`,
+      'Controles Consistentes': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 20h40M12 32h40M12 44h40" stroke="#eaf2ff" stroke-width="2"/><circle cx="23" cy="20" r="5" fill="#9b59b6"/><circle cx="41" cy="32" r="5" fill="#9b59b6"/><circle cx="30" cy="44" r="5" fill="#9b59b6"/></svg>`,
+      'Feedback de Interação': `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="20" fill="none" stroke="#9b59b6" stroke-width="3"/><path d="M21 32l7 7 15-16" fill="none" stroke="#eaf2ff" stroke-width="3" stroke-linecap="round"/></svg>`,
+      'Estados Visuais Claros': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="24" width="15" height="16" rx="4" fill="#9b59b6"/><rect x="25" y="24" width="15" height="16" rx="4" fill="none" stroke="#eaf2ff" stroke-width="2"/><rect x="44" y="24" width="15" height="16" rx="4" fill="#93a3b8" opacity=".35"/></svg>`,
+      'Seleções Ativas e Estado do Filtro': `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="30" cy="30" r="20" fill="none" stroke="#e45d5d" stroke-width="3"/><path d="M22 22l16 16m0-16L22 38" stroke="#e45d5d" stroke-width="3"/><path d="M44 47h10m-5-5 5 5-5 5" stroke="#eaf2ff" stroke-width="2.5" fill="none"/></svg>`,
+      'Filtros no Fluxo de Exploração': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 15h44L38 33v13l-12 5V33z" fill="none" stroke="#eaf2ff" stroke-width="2.5"/><circle cx="47" cy="18" r="5" fill="#9b59b6"/></svg>`,
+      'Exploração Intuitiva': `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="27" cy="27" r="15" fill="#9b59b6" opacity=".25" stroke="#eaf2ff" stroke-width="2"/><path d="M38 38l14 14M27 20v14M20 27h14" stroke="#eaf2ff" stroke-width="2.5"/></svg>`,
+      'Redundância à Cor': `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="20" cy="32" r="12" fill="#2a6bff"/><path d="M15 32l4 4 7-9" stroke="#fff" stroke-width="2.5" fill="none"/><path d="M43 19l13 26H30z" fill="#e89a3c"/><path d="M43 27v9m0 5h.01" stroke="#fff" stroke-width="2.5"/></svg>`,
+      'Tamanho de Alvos e Espaçamento': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="7" y="20" width="22" height="22" rx="5" fill="#e45d5d" opacity=".28" stroke="#eaf2ff" stroke-width="2"/><rect x="35" y="20" width="22" height="22" rx="5" fill="#e45d5d" opacity=".28" stroke="#eaf2ff" stroke-width="2"/><path d="M29 31h6" stroke="#eaf2ff" stroke-width="2"/></svg>`,
+      'Navegação por Teclado': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="14" width="48" height="36" rx="5" fill="none" stroke="#eaf2ff" stroke-width="2"/><path d="M15 22h8m4 0h8m4 0h10M15 31h10m4 0h9m4 0h7M15 40h34" stroke="#e45d5d" stroke-width="3" stroke-linecap="round"/></svg>`,
+      'Linguagem Clara': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 14h32l8 8v28H12z" fill="#e45d5d" opacity=".18" stroke="#eaf2ff" stroke-width="2"/><path d="M19 26h24M19 34h18M19 42h13" stroke="#eaf2ff" stroke-width="2.4" stroke-linecap="round"/></svg>`,
+      'Paletas Acessíveis': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="18" width="14" height="28" fill="#0072b2"/><rect x="25" y="18" width="14" height="28" fill="#e69f00"/><rect x="42" y="18" width="14" height="28" fill="#56b4e9"/></svg>`,
+      'Design Responsivo': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="7" y="13" width="38" height="32" rx="3" fill="none" stroke="#eaf2ff" stroke-width="2"/><rect x="48" y="22" width="10" height="21" rx="2" fill="none" stroke="#e45d5d" stroke-width="2"/><path d="M15 21h22M15 29h14" stroke="#e45d5d" stroke-width="2"/></svg>`,
+      'Escolha da Representação Visual': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="7" y="10" width="50" height="44" rx="5" fill="none" stroke="#eaf2ff" stroke-width="2"/><path d="M14 44h11V29H14zm14 0h11V20H28zm14 0h8V34h-8z" fill="#e89a3c"/><path d="M14 16h13" stroke="#93a3b8" stroke-width="2"/></svg>`,
+      'Contextualização do Indicador': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="10" width="48" height="44" rx="5" fill="none" stroke="#eaf2ff" stroke-width="2"/><text x="15" y="34" font-size="18" font-family="Roboto Mono" font-weight="600" fill="#e89a3c">42,6</text><text x="16" y="45" font-size="8" font-family="Inter" fill="#eaf2ff">mil t · jul/26</text></svg>`,
+      'Gráfico de Linhas — Tendência': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M9 52V12M9 52h46" stroke="#93a3b8" stroke-width="2"/><polyline points="13,45 24,31 36,37 50,19" fill="none" stroke="#e89a3c" stroke-width="3" stroke-linecap="round"/></svg>`,
+      'Gráfico de Barras — Comparação': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 52h44" stroke="#93a3b8" stroke-width="2"/><rect x="14" y="31" width="9" height="21" rx="2" fill="#e89a3c"/><rect x="28" y="20" width="9" height="32" rx="2" fill="#e89a3c" opacity=".75"/><rect x="42" y="38" width="9" height="14" rx="2" fill="#e89a3c" opacity=".5"/></svg>`,
+      'Gráfico de Dispersão — Relação': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 52V12M10 52h44" stroke="#93a3b8" stroke-width="2"/><g fill="#e89a3c"><circle cx="18" cy="44" r="3"/><circle cx="25" cy="38" r="3"/><circle cx="33" cy="34" r="3"/><circle cx="42" cy="26" r="3"/><circle cx="50" cy="19" r="3"/></g></svg>`,
+      'Composição e Proporção': `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="20" fill="none" stroke="#93a3b8" stroke-width="8" opacity=".35"/><path d="M32 12a20 20 0 0 1 17 30" fill="none" stroke="#e89a3c" stroke-width="8"/><circle cx="32" cy="32" r="9" fill="#0d1b2a"/></svg>`,
+      'Tabela para Detalhamento': `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="11" width="48" height="42" rx="4" fill="none" stroke="#eaf2ff" stroke-width="2"/><path d="M8 24h48M8 37h48M25 11v42M43 11v42" stroke="#e89a3c" stroke-width="2"/></svg>`,
+      'Narrativa e Anotações': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 49c10-24 21-26 30-14 8 11 13 8 18-5" fill="none" stroke="#e89a3c" stroke-width="3"/><rect x="10" y="10" width="24" height="12" rx="3" fill="#eaf2ff" opacity=".14" stroke="#eaf2ff"/><path d="M22 22l13 10" stroke="#eaf2ff" stroke-width="2" stroke-dasharray="3 3"/></svg>`,
+      'Atualidade, Fonte e Incerteza': `<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 43c11-28 34-28 48 0" fill="#e89a3c" opacity=".18"/><path d="M8 43c11-28 34-28 48 0" fill="none" stroke="#e89a3c" stroke-width="3" stroke-dasharray="2 5"/><circle cx="47" cy="18" r="8" fill="none" stroke="#eaf2ff" stroke-width="2"/><path d="M47 14v5l4 2" stroke="#eaf2ff" stroke-width="2"/></svg>`
+    };
+
+    function getDefaultIconSVG() {
+      return `<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="12" width="46" height="40" rx="5" fill="none" stroke="#eaf2ff" stroke-width="2.5"/><circle cx="23" cy="31" r="6" fill="#2a6bff"/><path d="M34 27h13M34 35h10" stroke="#eaf2ff" stroke-width="2.5"/></svg>`;
+    }
+
+    function getIconSVG(name) { return ICONS[name] || getDefaultIconSVG(); }
+
+
+
+    const guideImageMap = [
+      'comparar','evolucao','composicao','distribuicao','relacao','localizacao','ranking','meta','detalhe'
+    ];
+
+    function createCategoryNav() {
+      const container = document.getElementById('timeline-container');
+      const nav = document.createElement('div');
+      nav.className = 'category-nav';
+      nav.setAttribute('role','tablist');
+      nav.setAttribute('aria-label','Dimensões do PortoUX');
+
+      plotCategories.forEach(cat => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'category-button-html';
+        button.id = `tab-${cat.id}`;
+        button.setAttribute('role','tab');
+        button.setAttribute('aria-controls',`panel-${cat.id}`);
+        button.setAttribute('aria-selected','false');
+        button.style.setProperty('--category-color',cat.colour);
+        button.innerHTML = `<span class="category-code">${cat.id}</span><span class="category-text">${cat.shortLabel}</span><span class="category-full">${cat.category}</span>`;
+        button.addEventListener('click',()=>toggleCategory(cat,button));
+        nav.appendChild(button);
+      });
+      container.appendChild(nav);
+    }
+
+    const PORT_CONTEXT = {
+      terms: {
+        gate: ['gate','portaria','entrada','saida','saída','fluxo de veiculos','fluxo de veículos','caminhoes','caminhões','agendamento'],
+        mph: ['mph','movimentos por hora','movimento por hora'],
+        terminal: ['terminal','terminais','tecon','tev'],
+        patio: ['patio','pátio','yard'],
+        cais: ['cais','berco','berço','atracacao','atracação','desatracacao','desatracação'],
+        vessel: ['navio','navios','embarcacao','embarcação','vessel'],
+        cargo: ['conteiner','contêiner','container','teu','carga','cargas','embarque','desembarque'],
+        operation: ['operacao','operação','movimentacao','movimentação','produtividade','ocupacao','ocupação','permanencia','permanência','espera','fila','congestionamento']
+      }
+    };
+
+    const PORTOUX_PALETTES = [
+      {name:'PortoUX · Mar profundo', note:'Base escura com azul e turquesa para apoio e âmbar reservado ao destaque.', colors:[
+        {hex:'#0B1F33',name:'Azul-marinho',role:'Base / fundo'}, {hex:'#176B87',name:'Azul-petróleo',role:'Principal'},
+        {hex:'#64CCC5',name:'Turquesa',role:'Apoio'}, {hex:'#E8EEF3',name:'Cinza-azulado claro',role:'Neutro'},
+        {hex:'#F4B942',name:'Âmbar',role:'Destaque'}]},
+      {name:'PortoUX · Azul e verde-água', note:'Paleta curta para dashboards claros, mantendo uma única cor de destaque.', colors:[
+        {hex:'#F7F9FC',name:'Branco frio',role:'Fundo'}, {hex:'#16324F',name:'Azul profundo',role:'Texto / estrutura'},
+        {hex:'#2F80ED',name:'Azul',role:'Principal'}, {hex:'#56B4A9',name:'Verde-água',role:'Apoio'},
+        {hex:'#D97706',name:'Âmbar escuro',role:'Destaque'}]},
+      {name:'PortoUX · Categórica', note:'Use apenas quando categorias realmente precisarem de diferenciação e mantenha o significado das cores estável.', colors:[
+        {hex:'#2F80ED',name:'Azul',role:'Categoria A'}, {hex:'#27AE60',name:'Verde',role:'Categoria B'},
+        {hex:'#9B51E0',name:'Roxo',role:'Categoria C'}, {hex:'#F2994A',name:'Laranja',role:'Categoria D'},
+        {hex:'#5B6B7A',name:'Cinza',role:'Categoria E'}]},
+      {name:'PortoUX · Oceano', note:'Alternativa escura com azul oceano e ciano, mantendo coral apenas para destaque.', colors:[
+        {hex:'#071A2B',name:'Azul noite',role:'Base / fundo'}, {hex:'#0E7490',name:'Azul oceano',role:'Principal'},
+        {hex:'#22D3EE',name:'Ciano',role:'Apoio'}, {hex:'#CBD5E1',name:'Cinza claro',role:'Neutro'},
+        {hex:'#FB7185',name:'Coral',role:'Destaque'}]},
+      {name:'PortoUX · Teal executivo', note:'Combinação sóbria para síntese executiva, com verde-azulado e dourado pontual.', colors:[
+        {hex:'#0F2430',name:'Azul ardósia',role:'Base / fundo'}, {hex:'#147D92',name:'Teal',role:'Principal'},
+        {hex:'#63C7B2',name:'Verde-água',role:'Apoio'}, {hex:'#E6EDF3',name:'Cinza gelo',role:'Neutro'},
+        {hex:'#D9A441',name:'Dourado',role:'Destaque'}]},
+      {name:'PortoUX · Azul oceânico', note:'Alternativa clara com azul profundo, ciano e laranja reservado a pontos de atenção.', colors:[
+        {hex:'#F5F8FB',name:'Cinza muito claro',role:'Fundo'}, {hex:'#173B57',name:'Azul profundo',role:'Texto / estrutura'},
+        {hex:'#2A78B8',name:'Azul médio',role:'Principal'}, {hex:'#45B8AC',name:'Turquesa',role:'Apoio'},
+        {hex:'#E98A35',name:'Laranja',role:'Destaque'}]}
+    ];
+
+    const PANEL_CONTEXT_RULES = [
+      {
+        id:'tv', label:'Painel para TV / monitoramento',
+        keywords:['tv','televisao','televisão','monitor','monitoramento','sala de controle','painel do dia','indicadores do dia','tempo real'],
+        intro:'Como o painel será acompanhado principalmente por observação, priorize leitura rápida, estado atual e exceções que possam ser entendidas sem interação.',
+        h1:'Use poucos elementos simultâneos, valores principais em destaque e cores fortes somente para exceções ou situações que realmente exigem atenção.',
+        h2:'Coloque primeiro os KPIs mais importantes do momento. Comparações e tendências ficam em segundo nível; detalhes extensos não devem competir com a visão principal.',
+        h3:'Não esconda informações essenciais em filtros, cliques ou hover. Se houver troca automática de telas, mantenha a organização consistente entre elas.',
+        h4:'Teste o painel na própria TV e na distância real de uso. Títulos, valores e unidades precisam continuar legíveis, e alertas devem ter texto ou símbolo além da cor.',
+        h5:'Identifique período, unidade e última atualização. Quando uma referência for necessária para interpretar o valor, mostre-a próxima ao indicador.',
+        visuals:'KPIs para os números principais, barras para comparações e linhas quando houver evolução ao longo do tempo.',
+        avoid:'Excesso de indicadores, tabelas extensas, textos pequenos e informações que dependam de interação para serem compreendidas.'
+      },
+      {
+        id:'executive', label:'Painel executivo / gerencial',
+        keywords:['executivo','diretoria','gerencia','gerência','gestao','gestão','lideranca','liderança','estrategico','estratégico','decisor','tomada de decisao','tomada de decisão'],
+        intro:'Para uma visão executiva, priorize síntese, resultado, comparação com referências e leitura rápida do que está dentro ou fora do esperado.',
+        h1:'Reduza elementos decorativos e mantenha uma paleta curta. Reserve a cor de destaque para desvios, prioridades ou pontos que precisam de atenção.',
+        h2:'Organize a leitura do geral para o específico: resultados-chave primeiro, comparações depois e detalhamento apenas quando realmente necessário.',
+        h3:'Use poucos filtros e deixe as seleções ativas visíveis. A navegação deve ser simples e previsível.',
+        h4:'Mantenha textos e números legíveis e não use apenas cor para comunicar estado ou diferença importante.',
+        h5:'Mostre meta, período anterior ou outra referência quando ela for necessária para interpretar o indicador. Identifique período e unidade.',
+        visuals:'KPIs, barras para comparação, linhas para evolução e tabelas apenas quando o detalhe for necessário para a decisão.',
+        avoid:'Muitos KPIs com o mesmo peso, excesso de filtros, cores sem função e detalhamento operacional na visão principal.'
+      },
+      {
+        id:'operational', label:'Painel operacional',
+        keywords:['operacional','operacao','operação','controle operacional','acompanhamento operacional','turno','situacao atual','situação atual','estado operacional'],
+        intro:'Em um painel operacional, a prioridade é perceber rapidamente o estado da operação, os desvios e o que exige ação.',
+        h1:'Mantenha estados e exceções fáceis de identificar, mas evite transformar cada indicador em uma cor diferente. Use destaque apenas onde houver significado.',
+        h2:'Coloque situações que exigem ação antes de informações apenas descritivas e agrupe indicadores que tratam do mesmo processo.',
+        h3:'Deixe filtros usados com frequência acessíveis, mostre seleções ativas e permita alterar o recorte sem perder o contexto.',
+        h4:'Não dependa somente de vermelho, amarelo e verde. Associe rótulo, ícone ou texto aos estados importantes.',
+        h5:'Mostre status, horário de atualização, unidade, período e referência operacional quando aplicável.',
+        visuals:'KPIs, barras, linhas e tabela para detalhes que precisem ser consultados durante a operação.',
+        avoid:'Alertas apenas por cor, filtros escondidos, excesso de informação na primeira visão e tabelas como única forma de acompanhamento.'
+      },
+      {
+        id:'analytical', label:'Painel analítico / exploração',
+        keywords:['analitico','analítico','analise','análise','exploracao','exploração','investigar','investigacao','investigação','descobrir','causa','causas'],
+        intro:'Para exploração analítica, mantenha uma visão geral clara e permita aprofundar por diferentes recortes sem perder o contexto atual.',
+        h1:'Mantenha codificação visual consistente entre gráficos e use a mesma cor para o mesmo significado ao longo da análise.',
+        h2:'Comece com visão geral e avance para níveis de detalhe. Não coloque todas as granularidades no mesmo nível visual.',
+        h3:'Filtros, seleções, feedback e estados precisam estar claros. O usuário deve entender o que está filtrado e conseguir desfazer ações facilmente.',
+        h4:'Garanta que estados de seleção, foco e alerta sejam perceptíveis sem depender apenas da cor.',
+        h5:'Escolha cada visualização pela pergunta que ela precisa responder e mantenha período, unidade, fonte e atualização disponíveis quando necessários.',
+        visuals:'Barras, linhas, tabelas, heatmap quando houver matriz de intensidades, mapa quando localização for parte da pergunta e dispersão somente para relação entre duas medidas.',
+        avoid:'Muitos gráficos competindo entre si, filtros sem estado visível e visualizações sofisticadas sem ganho claro para a análise.'
+      }
+    ];
+
+    const VISUAL_ASSISTANT_RULES = [
+      {id:'ranking',intent:'Ordenar ou ranquear',priority:10,keywords:['ranking','ranquear','ordenar','top ','top 5','top 10','maiores','menores','melhores','piores'],visual:'Barras horizontais ordenadas',reason:'A pergunta busca ordenar categorias por magnitude e barras permitem comparar as posições com facilidade.',alternative:'Tabela ordenada quando a consulta de valores exatos for tão importante quanto o ranking.',avoid:'Rosca ou pizza para ranking.',dimensions:'H2 · H5'},
+      {id:'meta',intent:'Comparar meta e realizado',priority:11,keywords:['meta','realizado','planejado','orcado','orçado','objetivo','target','referencia','referência','previsto','limite'],visual:'KPI com referência ou barra com meta',reason:'O valor precisa ser interpretado em relação a uma referência explícita.',alternative:'Barras lado a lado quando for necessário comparar meta e realizado em várias categorias.',avoid:'Velocímetro quando valor, referência e desvio puderem ser apresentados diretamente.',dimensions:'H2 · H5'},
+      {id:'gauge',intent:'Interpretar medida em relação a meta, limite ou capacidade',priority:10,keywords:['gauge','velocimetro','velocímetro','capacidade utilizada','ocupacao maxima','ocupação máxima','limite operacional','faixa de desempenho'],visual:'Gauge ou KPI com referência',reason:'O gauge pode ser considerado quando uma medida contínua precisa ser interpretada em relação a uma meta, limite, capacidade ou faixa conhecida.',alternative:'KPI com referência costuma ser mais compacto quando valor, meta e desvio já comunicam a situação com clareza.',avoid:'Usar gauge para estados categóricos como Em operação, Parado e Aguardando, ou quando não existir referência conhecida.',dimensions:'H2 · H5'},
+      {id:'evolution',intent:'Acompanhar evolução no tempo',priority:9,keywords:['evolucao','evolução','tendencia','tendência','ao longo','ultimos meses','últimos meses','mes a mes','mês a mês','mensal','por mes','por mês','por ano','anual','por dia','diario','diário','historico','histórico','serie temporal','série temporal','jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],visual:'Gráfico de linhas',reason:'Existe uma sequência temporal e o objetivo é perceber evolução, picos, quedas ou mudanças de comportamento.',alternative:'Colunas quando houver poucos períodos e o foco estiver em totais discretos.',avoid:'Rosca ou pizza para mostrar evolução no tempo.',dimensions:'H2 · H5'},
+      {id:'composition',intent:'Mostrar composição de um total',priority:8,keywords:['participacao','participação','composicao','composição','proporcao','proporção','parte do total','percentual do total','share'],visual:'Barras 100% empilhadas ou composição simples',reason:'A pergunta trata de como categorias compõem um total; a representação deve facilitar a leitura das proporções.',alternative:'Rosca apenas quando houver poucas categorias e a leitura precisa entre fatias não for o objetivo principal.',avoid:'Rosca com muitas categorias ou várias roscas para comparar totais.',dimensions:'H5'},
+      {id:'bands',intent:'Comparar faixas de valores',priority:7,keywords:['por faixa','faixas','faixa de tempo','faixa de valor','intervalos','0 a ','0-','ate 2','até 2'],visual:'Barras por faixa',reason:'As faixas podem ser tratadas como categorias ordenadas, mantendo uma leitura simples e familiar.',alternative:'Tabela resumida por faixa quando os valores exatos forem a principal necessidade.',avoid:'Visualizações estatísticas complexas quando barras por faixa já respondem à pergunta.',dimensions:'H2 · H5'},
+      {id:'heatmap',intent:'Comparar intensidade em uma matriz',priority:8,keywords:['heatmap','mapa de calor','matriz','cruzar duas categorias','por hora e dia','dia da semana e hora','intensidade'],visual:'Heatmap',reason:'Uma matriz com intensidade de cor pode ajudar a localizar rapidamente concentrações e padrões entre duas dimensões categóricas.',alternative:'Tabela quando a consulta dos valores exatos for a prioridade.',avoid:'Usar apenas cor sem legenda/escala ou quando houver poucas categorias simples que barras resolveriam melhor.',dimensions:'H1 · H5'},
+      {id:'relation',intent:'Investigar relação entre medidas',priority:7,keywords:['correlacao','correlação','relacao entre','relação entre','versus',' vs ',' x ','entre duas medidas','associacao','associação'],visual:'Gráfico de dispersão',reason:'A pergunta relaciona duas medidas quantitativas e exige observar se elas variam juntas.',alternative:'Barras ou linhas quando a intenção real for comparar categorias ou acompanhar uma medida no tempo.',avoid:'Usar dispersão quando uma das dimensões for apenas uma categoria ou período.',dimensions:'H5'},
+      {id:'location',intent:'Analisar localização',priority:7,keywords:['mapa','localizacao no mapa','localização no mapa','posicao geografica','posição geográfica','coordenada','onde estao','onde estão','distribuicao espacial','distribuição espacial'],visual:'Mapa',reason:'A posição espacial faz parte da pergunta e contribui diretamente para a interpretação.',alternative:'Barras por local quando o objetivo for somente comparar valores entre locais.',avoid:'Mapa usado apenas como decoração.',dimensions:'H5'},
+      {id:'details',intent:'Consultar valores e detalhes',priority:8,keywords:['detalhe','detalhamento','registro','registros','valor exato','valores exatos','tabela','lista','consultar'],visual:'Tabela',reason:'A tarefa exige leitura de valores exatos, múltiplos atributos ou consulta registro a registro.',alternative:'Tabela acompanhada de um gráfico-resumo quando também for importante enxergar padrões gerais.',avoid:'Usar tabela como única visão quando a necessidade principal for comparar ou acompanhar tendência.',dimensions:'H2 · H5'},
+      {id:'compare',intent:'Comparar categorias',priority:6,keywords:['comparar','comparacao','comparação','por terminal','por categoria','por tipo','por equipamento','por grupo','por departamento','por area','por área','por berco','por berço','por gate','por patio','por pátio','entre terminais','categorias','terminais','departamentos','equipamentos'],visual:'Gráfico de barras',reason:'A pergunta compara magnitudes entre categorias discretas.',alternative:'Barras horizontais quando houver muitos itens ou rótulos longos.',avoid:'Gráfico de linhas quando as categorias não formarem uma sequência temporal.',dimensions:'H2 · H5'},
+      {id:'single',intent:'Destacar um indicador',priority:5,keywords:['valor atual','total','quantidade total','indicador principal','numero principal','número principal','kpi'],visual:'KPI',reason:'A necessidade principal é destacar um valor de leitura rápida.',alternative:'KPI com referência quando meta, período anterior ou limite forem necessários para interpretar o resultado.',avoid:'Criar um gráfico quando um único valor já responde à pergunta.',dimensions:'H2 · H5'}
+    ];
+
+    const VISUAL_ASSISTANT_AMBIGUOUS = ['movimentacao','movimentação','desempenho','produtividade','ocupacao','ocupação','espera','permanencia','permanência','volume','indicador','indicadores','mph','gate'];
+    const KNOWN_ACRONYMS = ['KPI','SLA','TEU','ETA','ETB','MPH','TMR','BI','UX','HCI','IHC','AIS'];
+
+    function normalizeAssistantText(value){return (value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim()}
+    function detectPortTerms(text){const normalized=normalizeAssistantText(text);const found=[];Object.entries(PORT_CONTEXT.terms).forEach(([group,terms])=>{if(terms.some(term=>normalized.includes(normalizeAssistantText(term)))) found.push(group)});return found}
+    function detectHexColors(text){return [...new Set((text.match(/#[0-9a-fA-F]{6}\b/g)||[]).map(v=>v.toUpperCase()))]}
+    const COLOR_NAME_MAP={
+      'azul':'#2F80ED','azul marinho':'#16324F','azul-marinho':'#16324F','laranja':'#E67E22','verde':'#27AE60','verde agua':'#56B4A9','verde-agua':'#56B4A9','turquesa':'#20B2AA','ciano':'#22B8CF','amarelo':'#F2C94C','ambar':'#D97706','âmbar':'#D97706','vermelho':'#D64545','coral':'#F26B6B','roxo':'#8E5CC7','violeta':'#7C4DFF','rosa':'#D85B8C','cinza':'#6B7280','preto':'#111827','branco':'#F7F9FC'
+    };
+    function detectNamedColors(text){
+      const normalized=normalizeAssistantText(text);const found=[];const matched=[];
+      Object.entries(COLOR_NAME_MAP).sort((a,b)=>b[0].length-a[0].length).forEach(([name,hex])=>{const key=normalizeAssistantText(name);if(normalized.includes(key)&&!matched.some(longer=>longer.includes(key))&&!found.some(c=>c.hex===hex)){found.push({hex,name:name.replace(/\b\w/g,m=>m.toUpperCase())});matched.push(key)}});
+      return found;
+    }
+    function mixHex(a,b,ratio=.5){
+      const clean=v=>v.replace('#','');const aa=clean(a),bb=clean(b);const part=i=>Math.round(parseInt(aa.slice(i,i+2),16)*(1-ratio)+parseInt(bb.slice(i,i+2),16)*ratio).toString(16).padStart(2,'0');return '#'+part(0)+part(2)+part(4);
+    }
+    function customPaletteFromText(text){
+      const hexes=detectHexColors(text).map((hex,i)=>({hex,name:'Cor informada '+(i+1)}));const named=detectNamedColors(text);const informed=[...hexes];
+      named.forEach(c=>{if(!informed.some(x=>x.hex===c.hex))informed.push(c)});
+      if(!informed.length)return null;
+      const primary=informed[0];const support=informed[1]||{hex:mixHex(primary.hex,'#FFFFFF',.28),name:'Variação de apoio'};const accent=informed[2]||informed[1]||{hex:mixHex(primary.hex,'#111827',.22),name:'Variação de destaque'};
+      return {name:'Paleta personalizada',note:'As cores informadas foram mantidas como base da linguagem cromática da prévia.',colors:[
+        {hex:primary.hex,name:primary.name,role:'Principal'},
+        {hex:support.hex,name:support.name,role:'Apoio'},
+        {hex:accent.hex,name:accent.name,role:'Destaque'}
+      ]};
+    }
+    function detectUnknownAcronyms(text){const hits=text.match(/\b[A-ZÁÉÍÓÚÇ]{2,6}\b/g)||[];return [...new Set(hits.filter(x=>!KNOWN_ACRONYMS.includes(x)))]}
+
+    function detectPanelContext(text){
+      const normalized=normalizeAssistantText(text);
+      const isPanel=['painel','dashboard','tela','visao','visão'].some(term=>normalized.includes(normalizeAssistantText(term)));
+      if(!isPanel) return null;
+      let best=null; PANEL_CONTEXT_RULES.forEach(rule=>{const score=rule.keywords.reduce((sum,k)=>sum+(normalized.includes(normalizeAssistantText(k))?2:0),0);if(!best||score>best.score)best={rule,score}});
+      if(best&&best.score>0)return best.rule;
+      return {id:'general',label:'Painel geral',intro:'Estruture o painel para que a principal pergunta seja respondida primeiro e o detalhamento apareça apenas quando necessário.',h1:'Reduza ruído visual e mantenha uma paleta curta, tipografia consistente e contraste suficiente entre conteúdo e fundo.',h2:'Dê mais destaque aos indicadores prioritários e organize o conteúdo da visão geral para o detalhe.',h3:'Mantenha filtros e seleções compreensíveis e evite esconder informações essenciais atrás de interações desnecessárias.',h4:'Garanta leitura clara de textos e valores e não dependa somente de cor para comunicar estados ou diferenças importantes.',h5:'Mostre período, unidade, atualização e referências necessárias para interpretar corretamente os indicadores.',visuals:'Use KPIs, barras e linhas como base; acrescente tabela, heatmap, composição ou mapa somente quando a pergunta exigir.',avoid:'Excesso de cores, gráficos sem função clara, informação duplicada e muitos elementos com o mesmo peso visual.'};
+    }
+
+    function scoreAssistantRule(rule,normalized){
+      let score=rule.keywords.reduce((sum,keyword)=>{const key=normalizeAssistantText(keyword);return sum+(normalized.includes(key)?(key.length>8?3:2):0)},0);
+      if(rule.id==='evolution'&&normalized.includes('tempo medio')&&!/(ao longo|por mes|mensal|ultimos|histor|jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/.test(normalized))score=Math.max(0,score-4);
+      if(rule.id==='location'&&/(por berco|por terminal|por gate|por patio)/.test(normalized)&&!/(mapa|localiz|espacial|coordenad|onde)/.test(normalized))score=Math.max(0,score-5);
+      return score+(score>0?(rule.priority||0)*.05:0);
+    }
+
+    function analyzeVisualizationQuestion(text){
+      const normalized=normalizeAssistantText(text);
+      const scored=VISUAL_ASSISTANT_RULES.map(rule=>({rule,score:scoreAssistantRule(rule,normalized)})).sort((a,b)=>b.score-a.score);
+      const strong=scored[0];
+      if(strong&&strong.score>=2)return {type:'recommendation',rule:strong.rule};
+      if(VISUAL_ASSISTANT_AMBIGUOUS.some(k=>normalized.includes(normalizeAssistantText(k))))return {type:'clarify',message:'Para eu indicar a visualização sem presumir o objetivo: o que você quer fazer com esse indicador?',options:['Comparar categorias','Acompanhar evolução','Meta × realizado','Mostrar valor atual']};
+      return {type:'clarify',message:'Qual é a principal pergunta que essa visualização precisa responder?',options:['Comparar categorias','Acompanhar evolução','Mostrar composição','Consultar detalhes']};
+    }
+
+    function getPresentationTips(rule,text){
+      const normalized=normalizeAssistantText(text); const tips=[];
+      if(['compare','ranking','bands'].includes(rule.id)){
+        if(/muitos|varios|vários|nome longo|rotulo longo|rótulo longo/.test(normalized)||rule.id==='ranking')tips.push('Prefira barras horizontais quando houver muitos itens, ranking ou rótulos longos.');
+        else tips.push('Com poucas categorias e rótulos curtos, barras verticais também funcionam bem.');
+        tips.push(rule.id==='ranking'?'Ordene do maior para o menor valor para tornar o ranking explícito.':'Se não houver uma ordem natural entre as categorias, ordene do maior para o menor valor para facilitar a comparação e destacar as maiores magnitudes.');
+        tips.push('Mantenha a escala quantitativa iniciando em zero.');
+      }
+      if(rule.id==='evolution'){tips.push('Mantenha os períodos em ordem cronológica e com intervalos temporais consistentes.');tips.push('Evite destacar todos os pontos; use destaque apenas quando houver uma mensagem ou evento relevante.');}
+      if(rule.id==='composition'){tips.push('Use parte-todo somente quando as categorias formarem um total significativo.');tips.push('Se houver muitas categorias ou comparação precisa entre partes, prefira barras.');}
+      if(rule.id==='meta'){tips.push('Mantenha valor e referência próximos e identifique claramente o que é meta, limite ou realizado.');tips.push('Mostre o desvio quando ele ajudar a interpretar o resultado.');}
+      if(rule.id==='details'){tips.push('Mostre apenas colunas necessárias para a tarefa e alinhe valores numéricos.');tips.push('Suavize bordas e divisórias para que os dados, não a grade, recebam destaque.');}
+      if(rule.id==='relation'){tips.push('Use dispersão somente quando os dois eixos representarem medidas quantitativas.');tips.push('Identifique claramente as unidades dos dois eixos.');}
+      if(rule.id==='heatmap'){tips.push('Inclua uma escala/legenda que explique o significado da intensidade.');tips.push('Não use a cor como única pista para um estado crítico quando houver necessidade de acessibilidade.');}
+      tips.push('Use cor com função: uma base coerente, neutros para o segundo plano e destaque apenas no que precisa chamar atenção.');
+      tips.push('Reduza grid, bordas e legendas quando não ajudarem a interpretar os dados.');
+      return tips.slice(0,4);
+    }
+
+    function addAssistantMessage(chat,role,content){
+      const message=document.createElement('div');message.className=`assistant-message ${role}`;
+      if(typeof content==='string'){const p=document.createElement('p');p.textContent=content;message.appendChild(p)}else message.appendChild(content);
+      if(role==='assistant'&&content instanceof HTMLElement&&content.classList.contains('assistant-recommendation')){
+      }
+      chat.appendChild(message);chat.scrollTop=chat.scrollHeight;return message
+    }
+
+    function appendTipList(parent,title,items){if(!items||!items.length)return;const block=document.createElement('div');block.className='assistant-tip-block';const b=document.createElement('b');b.textContent=title;const ul=document.createElement('ul');items.forEach(item=>{const li=document.createElement('li');li.textContent=item;ul.appendChild(li)});block.append(b,ul);parent.appendChild(block)}
+
+    function recommendationNode(rule,text){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';
+      const eyebrow=document.createElement('span');eyebrow.className='assistant-recommendation-label';eyebrow.textContent=rule.intent;
+      const title=document.createElement('strong');title.className='assistant-recommendation-title';title.textContent=rule.visual;
+      const reason=document.createElement('p');reason.textContent=rule.reason;wrap.append(eyebrow,title,reason);
+      appendTipList(wrap,'Como apresentar',getPresentationTips(rule,text));
+      if(rule.alternative){const alt=document.createElement('p');alt.innerHTML=`<b>Alternativa:</b> ${rule.alternative}`;wrap.appendChild(alt)}
+      if(rule.avoid){const avoid=document.createElement('p');avoid.innerHTML=`<b>Evite:</b> ${rule.avoid}`;wrap.appendChild(avoid)}
+      const dims=document.createElement('small');dims.className='assistant-context-note';dims.textContent=`PortoUX relacionado: ${rule.dimensions||'H5'}`;wrap.appendChild(dims);
+      wrap.appendChild(assistantActionButtons(['Ver prévia do painel','Sugerir paleta']));
+      return wrap;
+    }
+
+    function panelRecommendationNode(context,portTerms,text=''){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation assistant-panel-recommendation';
+      const eyebrow=document.createElement('span');eyebrow.className='assistant-recommendation-label';eyebrow.textContent='Orientação de painel';
+      const title=document.createElement('strong');title.className='assistant-recommendation-title';title.textContent=context.label;
+      const intro=document.createElement('p');intro.textContent=context.intro;wrap.append(eyebrow,title,intro);
+      const grid=document.createElement('div');grid.className='assistant-h-grid';[['H1 · Clareza',context.h1],['H2 · Hierarquia',context.h2],['H3 · Interação',context.h3],['H4 · Acessibilidade',context.h4],['H5 · Contexto',context.h5]].forEach(([label,txt])=>{const item=document.createElement('div');item.className='assistant-h-item';const b=document.createElement('b');b.textContent=label;const p=document.createElement('p');p.textContent=txt;item.append(b,p);grid.appendChild(item)});wrap.appendChild(grid);
+      const visuals=document.createElement('p');visuals.innerHTML=`<b>Visualizações:</b> ${context.visuals}`;wrap.appendChild(visuals);
+      const avoid=document.createElement('p');avoid.innerHTML=`<b>Evite:</b> ${context.avoid}`;wrap.appendChild(avoid);
+      if(/tempo real|atualiza|atualização|atualizacao/.test(normalizeAssistantText(text))){const update=document.createElement('p');update.innerHTML='<b>Atualização:</b> deixe visível quando o dado foi atualizado e não faça uma informação atrasada parecer tempo real.';wrap.appendChild(update)}
+      wrap.appendChild(assistantActionButtons(['Ver prévia do painel','Sugerir paleta','Revisar estrutura']));
+      return wrap;
+    }
+
+    function quantityRecommendationNode(text){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';
+      wrap.innerHTML='<span class="assistant-recommendation-label">Quantidade de visualizações</span><strong class="assistant-recommendation-title">Não existe um número fixo ideal</strong><p>Use somente as visualizações necessárias para responder às principais perguntas do painel. Quando vários elementos repetem a mesma informação ou competem pela atenção, simplifique ou mova o detalhamento para um segundo nível.</p>';
+      appendTipList(wrap,'Antes de adicionar um gráfico, verifique',['Ele responde a uma pergunta diferente das visualizações que já existem?','Precisa estar na visão inicial ou pode ficar em um nível de detalhe?','Todos os elementos têm o mesmo peso visual sem necessidade?']);
+      const note=document.createElement('small');note.className='assistant-context-note';note.textContent='Base PortoUX: H1 · redução de ruído e carga informacional; H2 · hierarquia e níveis de análise.';wrap.appendChild(note);return wrap;
+    }
+
+    function stateExceptionNode(){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Estado operacional e exceção</span><strong class="assistant-recommendation-title">Destaque o estado atual e reserve atenção para o desvio</strong><p>Quando o objetivo for saber se a operação está normal ou exige ação, deixe o estado atual fácil de perceber e destaque somente as exceções relevantes.</p>';
+      appendTipList(wrap,'Como apresentar',['Use texto como “Normal”, “Atenção” ou “Crítico” junto ao destaque visual quando esses estados existirem no processo.','Não dependa apenas da cor para comunicar um estado importante.','Mostre horário de atualização quando o dado representar a situação atual.']);return wrap;
+    }
+
+    function levelsNode(){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Níveis de análise</span><strong class="assistant-recommendation-title">Organize da visão geral para o detalhe</strong><p>Quando houver informação consolidada e diferentes recortes, não dê o mesmo peso a todas as granularidades. Comece pelo panorama principal e permita aprofundar para terminal, navio, carga, período ou outro nível relevante.</p>';
+      appendTipList(wrap,'Estrutura sugerida',['Visão geral: indicadores principais.','Segundo nível: comparação ou situação prioritária.','Detalhe: registros e recortes específicos quando necessários.']);return wrap;
+    }
+
+    function visualCleanupNode(normalized){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Construção visual</span><strong class="assistant-recommendation-title">Mantenha somente o que ajuda a leitura</strong>';
+      const tips=[];
+      if(/grid|grade/.test(normalized))tips.push('Grid: reduza a intensidade ou remova quando não for necessário para estimar e comparar valores.');
+      if(/borda/.test(normalized))tips.push('Bordas: use apenas quando ajudarem a separar ou organizar; em tabelas e gráficos, prefira divisórias discretas.');
+      if(/legenda/.test(normalized))tips.push('Legenda: se for possível identificar a série diretamente no gráfico, a rotulagem direta reduz a ida e volta entre legenda e dados.');
+      if(/eixo|escala/.test(normalized))tips.push('Eixos: mantenha títulos/unidades quando necessários à interpretação; em barras, preserve a linha de base zero.');
+      if(/fonte|tipografia/.test(normalized))tips.push('Tipografia: use uma família legível e consistente; hierarquia deve vir de tamanho e peso, não de muitas fontes diferentes.');
+      if(!tips.length)tips.push('Remova elementos decorativos ou estruturais que possam ser retirados sem prejudicar a interpretação.');
+      appendTipList(wrap,'Orientação',tips);return wrap;
+    }
+
+    function isBroadDashboardNeed(text,activeMode=''){
+      const n=normalizeAssistantText(text);
+      if(activeMode==='Montar meu painel'||activeMode==='Painel para TV')return true;
+      if(/qual graf|qual gráfico|que graf|que gráfico|melhor graf|melhor gráfico|visualizacao usar|visualização usar/.test(n))return false;
+      if(/paleta|hex|cor principal|cores|avaliar|avalie|minha ideia|melhorar graf|melhorar gráfico/.test(n))return false;
+      const action=/(acompanhar|monitorar|controlar|analisar|gerenciar|visualizar|mostrar|entender|verificar)/.test(n);
+      const subject=/(quantidade|qtd|total|volume|entrada|saida|saída|fluxo|movimentacao|movimentação|chamado|incidente|venda|pedido|atendimento|ocorrencia|ocorrência|ocupacao|ocupação|produtividade|desempenho|fila|espera|status|sla|custo|receita|estoque|producao|produção)/.test(n);
+      return action&&subject&&n.split(' ').length>=5;
+    }
+
+    function dashboardNeedNode(text,blueprint){
+      const n=normalizeAssistantText(text);const wrap=document.createElement('div');wrap.className='assistant-recommendation assistant-panel-recommendation';
+      wrap.innerHTML='<span class="assistant-recommendation-label">Estrutura sugerida</span><strong class="assistant-recommendation-title">Organize o painel a partir do que precisa ser acompanhado</strong><p>Antes de escolher um gráfico isolado, vale definir quais informações precisam aparecer primeiro e qual pergunta cada componente deve responder.</p>';
+      const items=[];
+      blueprint.components.forEach(c=>{
+        if(c.type==='kpi-main')items.push(`${c.label}: destaque o valor principal para leitura imediata.`);
+        if(c.type==='kpi')items.push(`${c.label}: use como indicador de apoio quando puder ser calculado a partir da granularidade disponível.`);
+        if(c.type==='line')items.push(`${c.label}: use linha para mostrar como a medida varia na sequência temporal.`);
+        if(c.type==='bars')items.push(`${c.label}: use barras quando houver categorias que precisem ser comparadas; sem ordem natural, ordene do maior para o menor valor.`);
+        if(c.type==='status')items.push(`${c.label}: trate estados como categorias e mantenha rótulos visíveis.`);
+        if(c.type==='meta')items.push(`${c.label}: mantenha valor e referência próximos.`);
+        if(c.type==='table')items.push(`${c.label}: deixe registros exatos para consulta ou segundo nível.`);
+      });
+      appendTipList(wrap,'Estrutura do painel',items.slice(0,6));
+      const conditional=[];
+      if(/no dia|do dia|hoje|durante o dia/.test(n)&&!/(hora|horario|horário|timestamp)/.test(n))conditional.push('Se cada registro tiver horário, você também pode identificar o pico do período e acompanhar a evolução ao longo do dia.');
+      if(!/(por terminal|por departamento|por categoria|por tipo|por unidade|por area|por área|por equipe|por grupo|por gate|por patio|por pátio|por berco|por berço)/.test(n))conditional.push('Se existir uma categoria relevante, como unidade, tipo, área ou processo, inclua uma comparação apenas se ela ajudar a responder ao objetivo.');
+      if(!/(meta|limite|capacidade|sla|referencia|referência)/.test(n))conditional.push('Só inclua meta, limite ou referência quando esse dado existir e for necessário para interpretar o resultado.');
+      appendTipList(wrap,'Dependendo dos dados disponíveis',conditional.slice(0,3));
+      const avoid=document.createElement('p');avoid.innerHTML='<b>Evite:</b> adicionar visualizações apenas para preencher espaço ou transformar cada campo disponível em um gráfico.';wrap.appendChild(avoid);
+      wrap.appendChild(assistantActionButtons(['Ver prévia do painel','Sugerir paleta','Revisar estrutura']));return wrap;
+    }
+
+    function buildPanelBlueprint(text='',lastRule=null,panelContext=null){
+      const n=normalizeAssistantText(text);const components=[];const push=(type,label,optional=false)=>{if(!components.some(c=>c.type===type&&c.label===label))components.push({type,label,optional})};
+      const onlyIndicators=/(somente|apenas|so)\s+(com\s+)?(indicadores|kpis?)|painel\s+(de|com)\s+(indicadores|kpis?)\s*(apenas|somente)?/.test(n)&&!/(evolu|compar|barra|linha|tabela|status|compos|dispers|mapa)/.test(n);
+      if(onlyIndicators){['Indicador principal','Indicador de apoio','Indicador de apoio','Indicador de apoio'].forEach((label,i)=>push(i===0?'kpi-main':'kpi',label));return {type:'kpi-only',title:'Painel de indicadores',components,source:'context'};}
+      const hasQuantity=/(quantidade|qtd|total|volume|numero|número|contagem|entrad|said|moviment|chamados?|incidentes?|vendas?|pedidos?|atendimentos?|ocorrencias?|ocorrências?|ocupacao|ocupação|produtividade|desempenho|custo|receita|estoque|producao|produção|sla)/.test(n);
+      const hasDaily=/(hoje|no dia|do dia|diario|diário|por dia|durante o dia)/.test(n);
+      const hasTime=/(hora|horario|horário|faixa horaria|faixa horária|turno|ao longo|evolu|tendencia|tendência|mensal|por mes|por mês|por ano|data|periodo|período)/.test(n);
+      const hasCategory=/(por terminal|por departamento|por categoria|por tipo|por unidade|por area|por área|por equipe|por grupo|por gate|por patio|por pátio|por berco|por berço|ranking|compar)/.test(n);
+      const hasPanel=/(painel|dashboard|tv|monitoramento|executivo|operacional|analitico|analítico|acompanhar|monitorar|controlar)/.test(n)||panelContext;
+      if(hasPanel&&hasQuantity)push('kpi-main',hasDaily?'Total no dia':'Total no período');
+      else if(hasPanel||/kpi|indicador/.test(n))push('kpi-main','Indicador principal');
+      if(hasDaily&&hasQuantity){push('kpi','Pico do período',true);push('line','Evolução ao longo do dia',true);}
+      else if(hasTime&&hasQuantity)push('line','Evolução no tempo');
+      if(lastRule){
+        if(['compare','ranking','bands'].includes(lastRule.id))push('bars','Comparação');
+        if(lastRule.id==='evolution')push('line','Evolução');
+        if(lastRule.id==='composition')push('composition','Composição');
+        if(lastRule.id==='details')push('table','Detalhamento');
+        if(lastRule.id==='meta')push('meta','Meta × realizado');
+        if(lastRule.id==='relation')push('scatter','Relação entre medidas');
+        if(lastRule.id==='single')push('kpi-main','Indicador principal');
+      }
+      if(/meta|limite|capacidade|sla|referencia|referência/.test(n))push('meta','Meta × realizado');
+      if(/gauge|velocimetro|velocímetro/.test(n)&&/(meta|limite|capacidade|percent|ocupacao|ocupação|sla)/.test(n))push('gauge','Indicador com referência');
+      if(/evolu|tendencia|tendência|histor|ao longo|por mes|por mês|mensal|por ano/.test(n))push('line','Evolução no tempo');
+      if(hasCategory)push('bars','Comparação por categoria');
+      if(/status|situacao|situação|estado/.test(n)&&!/(gauge|velocimetro|velocímetro)/.test(n))push('status','Distribuição por status');
+      if(/compos|parte.*todo|participacao|participação|distribuicao percentual|distribuição percentual/.test(n))push('composition','Composição');
+      if(/tabela|detalhe|detalhamento|registro|registros/.test(n))push('table','Detalhamento');
+      if(/filtro|segmentacao|segmentação|selecao|seleção/.test(n))push('filters','Filtros');
+      if(panelContext&&panelContext.id==='tv'&&!components.some(c=>['line','bars','status','meta','gauge'].includes(c.type)))push('status','Situação atual');
+      if(!components.length)return {type:'neutral',title:'Prévia neutra',components:[],source:'neutral'};
+      return {type:'contextual',title:panelContext?.label||'Estrutura sugerida',components:components.slice(0,8),source:'context'};
+    }
+
+    function previewComponentHTML(component,index){
+      const label=component.label||'Indicador';const optional=component.optional?'<em>Se houver granularidade temporal</em>':'';
+      if(component.type==='kpi-main'||component.type==='kpi'){const tone=index%3===0?'var(--pv-primary)':index%3===1?'var(--pv-support)':'var(--pv-accent)';return `<div class="pv-card ${component.type==='kpi-main'?'pv-kpi-main':''}" style="border-top:3px solid ${tone}"><small>${label}</small><b>${index===0?'384':index===1?'14h–15h':index===2?'62':'78%'}</b>${component.type==='kpi-main'?'<em>Atual</em>':optional}</div>`;}
+      if(component.type==='meta')return `<div class="pv-card pv-meta"><small>${label}</small><b>92%</b><span><i style="width:92%"></i></span><em>Meta 95%</em></div>`;
+      if(component.type==='gauge')return `<div class="pv-card pv-gauge"><small>${label}</small><div class="pv-gauge-ring"><b>78%</b></div><em>Limite 80%</em></div>`;
+      if(component.type==='bars')return `<div class="pv-card pv-wide pv-bars-card"><small>${label}</small><div class="pv-bars"><span style="width:88%"></span><span style="width:72%"></span><span style="width:55%"></span><span class="accent" style="width:39%"></span></div><em>Maior → menor</em></div>`;
+      if(component.type==='line')return `<div class="pv-card pv-wide pv-line-card"><small>${label}</small><div class="pv-line"><svg viewBox="0 0 220 70" aria-hidden="true"><polyline points="8,55 48,47 88,51 128,32 170,36 212,15" fill="none" stroke="var(--pv-primary)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><line x1="8" y1="60" x2="214" y2="60" stroke="var(--pv-text)" opacity=".25"/></svg></div>${optional}</div>`;
+      if(component.type==='status')return `<div class="pv-card pv-wide pv-status"><small>${label}</small><div><span><i></i>Em operação <b>12</b></span><span><i></i>Aguardando <b>4</b></span><span><i></i>Parado <b>2</b></span></div></div>`;
+      if(component.type==='composition')return `<div class="pv-card pv-wide pv-composition"><small>${label}</small><div class="pv-stack"><i style="width:44%"></i><i style="width:31%"></i><i style="width:17%"></i><i style="width:8%"></i></div><em>44% · 31% · 17% · 8%</em></div>`;
+      if(component.type==='table')return `<div class="pv-card pv-wide pv-table"><small>${label}</small><div><i></i><i></i><i></i><i></i></div></div>`;
+      if(component.type==='filters')return `<div class="pv-card pv-wide pv-filters"><small>${label}</small><div><span>Período</span><span>Unidade</span><span>Status</span></div></div>`;
+      if(component.type==='scatter')return `<div class="pv-card pv-wide pv-scatter"><small>${label}</small><div>${[1,2,3,4,5,6].map((_,i)=>`<i style="left:${18+i*13}%;bottom:${18+(i%3)*18}%"></i>`).join('')}</div></div>`;
+      return '';
+    }
+
+    function palettePreviewNode(palette,blueprint={type:'neutral',components:[]},theme='dark'){
+      const preview=document.createElement('div');preview.className='assistant-dashboard-preview';
+      const colors=palette.colors||[];
+      const role=(needle)=>colors.find(c=>normalizeAssistantText(c.role||'').includes(needle))?.hex;
+      const primary=role('principal')||colors[0]?.hex||'#176B87';
+      const support=role('apoio')||colors[2]?.hex||colors[1]?.hex||'#64CCC5';
+      const accent=role('destaque')||colors[4]?.hex||colors[3]?.hex||'#F4B942';
+      const isLight=theme==='light';
+      const bg=isLight?'#F4F7FA':'#091827', surface=isLight?'#FFFFFF':'#10243A', textColor=isLight?'#17324F':'#EAF2FF', muted=isLight?'#6B7C8F':'#8FA7BC', border=isLight?'#DCE5EC':'#294158';
+      const hasContext=blueprint&&blueprint.type!=='neutral'&&blueprint.components?.length;
+      const headText=hasContext?'Prévia baseada na estrutura desta conversa':'Prévia neutra da paleta';
+      const subtitle=hasContext?'A paleta foi aplicada somente aos componentes sugeridos':'Ainda não há uma estrutura de painel definida';
+      let body='';
+      if(hasContext){body=blueprint.components.map(previewComponentHTML).join('')}
+      else body=`<div class="pv-neutral-board"><div><small>Cor principal</small><i style="background:var(--pv-primary)"></i></div><div><small>Apoio</small><i style="background:var(--pv-support)"></i></div><div><small>Destaque</small><i style="background:var(--pv-accent)"></i></div><p>Defina o objetivo ou os dados do painel para gerar uma prévia contextual.</p></div>`;
+      preview.innerHTML=`<div class="assistant-preview-head"><div><b>${headText}</b><span>${subtitle}</span></div><div class="assistant-preview-controls" role="group" aria-label="Tema da prévia"><button type="button" data-preview-theme="dark" class="${!isLight?'active':''}">Escuro</button><button type="button" data-preview-theme="light" class="${isLight?'active':''}">Claro</button></div></div>
+      <div class="assistant-preview-canvas ${hasContext?'is-contextual':'is-neutral'}" style="--pv-bg:${bg};--pv-surface:${surface};--pv-text:${textColor};--pv-muted:${muted};--pv-border:${border};--pv-primary:${primary};--pv-support:${support};--pv-accent:${accent}">
+        <aside class="pv-sidebar"><span class="pv-brand">PORTO</span><i></i><i></i><i></i></aside>
+        <div class="pv-main"><div class="pv-top"><span>${hasContext?blueprint.title:'Aplicação de cores'}</span><small>${hasContext?'Estrutura contextual':'Sem estrutura definida'}</small></div><div class="pv-component-grid">${body}</div></div>
+      </div>`;
+      return preview;
+    }
+
+    function assistantActionButtons(labels){
+      const row=document.createElement('div');row.className='assistant-response-actions';
+      labels.forEach(label=>{const b=document.createElement('button');b.type='button';b.dataset.assistantAction=label;b.textContent=label;row.appendChild(b)});return row;
+    }
+
+    function paletteNode(text,paletteIndex=0,assistantContext={}){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation palette-recommendation';
+      const custom=customPaletteFromText(text);const palette=custom||assistantContext.activePalette||PORTOUX_PALETTES[Math.max(0,Math.min(paletteIndex,PORTOUX_PALETTES.length-1))];
+      const eyebrow=document.createElement('span');eyebrow.className='assistant-recommendation-label';eyebrow.textContent='Cores e paleta';wrap.appendChild(eyebrow);
+      const title=document.createElement('strong');title.className='assistant-recommendation-title';title.textContent=palette.name;wrap.appendChild(title);
+      const p=document.createElement('p');p.textContent=palette.note||'Uma paleta curta ajuda a manter coerência visual.';wrap.appendChild(p);
+      const swatches=document.createElement('div');swatches.className='assistant-color-grid';palette.colors.forEach(color=>{const item=document.createElement('div');item.className='assistant-color-item';const swatch=document.createElement('button');swatch.type='button';swatch.className='assistant-color-swatch';swatch.style.backgroundColor=color.hex;swatch.title=`Copiar ${color.hex}`;swatch.setAttribute('aria-label',`Copiar cor ${color.hex}`);swatch.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(color.hex);swatch.dataset.copied='true';setTimeout(()=>delete swatch.dataset.copied,1200)}catch(e){}});const meta=document.createElement('div');meta.innerHTML=`<b>${color.hex}</b><span>${color.name}</span><small>${color.role}</small>`;item.append(swatch,meta);swatches.appendChild(item)});wrap.appendChild(swatches);
+      const blueprint=assistantContext.blueprint||buildPanelBlueprint(assistantContext.lastQuestion||'',assistantContext.lastRule,assistantContext.panelContext);
+      wrap.appendChild(palettePreviewNode(palette,blueprint,assistantContext.previewTheme||'dark'));
+      const tools=document.createElement('p');tools.className='assistant-tools';tools.innerHTML='A paleta define as cores dos componentes; o tema claro ou escuro controla fundo, superfícies e texto. Para testar outras combinações, você também pode usar <a href="https://color.adobe.com/" target="_blank" rel="noopener noreferrer">Adobe Color</a> ou <a href="https://coolors.co/" target="_blank" rel="noopener noreferrer">Coolors</a>.';wrap.appendChild(tools);
+      wrap.appendChild(assistantActionButtons(['Outra paleta','Ver prévia do painel','Revisar estrutura']));return wrap;
+    }
+
+    function previewOnlyNode(assistantContext={}){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';
+      wrap.innerHTML='<span class="assistant-recommendation-label">Prévia do painel</span><strong class="assistant-recommendation-title">Estrutura baseada no contexto atual</strong><p>A prévia usa os componentes inferidos ou recomendados na conversa e preserva a paleta e o tema escolhidos.</p>';
+      const palette=assistantContext.activePalette||PORTOUX_PALETTES[assistantContext.paletteIndex||0];
+      const blueprint=assistantContext.blueprint||buildPanelBlueprint(assistantContext.lastQuestion||'',assistantContext.lastRule,assistantContext.panelContext);
+      wrap.appendChild(palettePreviewNode(palette,blueprint,assistantContext.previewTheme||'dark'));
+      wrap.appendChild(assistantActionButtons(['Sugerir paleta','Revisar estrutura']));return wrap;
+    }
+
+    function dataContextNode(normalized){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Contexto do dado</span><strong class="assistant-recommendation-title">Deixe explícito o que o usuário precisa para interpretar</strong>';
+      const tips=[];
+      if(/atualiza|tempo real/.test(normalized))tips.push('Mostre a última atualização quando a atualidade do dado fizer diferença e evite apresentar dado atrasado como tempo real.');
+      if(/fonte/.test(normalized))tips.push('Informe a fonte quando ela for relevante para confiança, rastreabilidade ou combinação de origens diferentes.');
+      if(/periodo|período/.test(normalized))tips.push('Identifique o período ao qual o valor se refere, principalmente em KPIs e comparações.');
+      if(/unidade/.test(normalized))tips.push('Mantenha a unidade próxima ao valor ou eixo para evitar que o usuário precise lembrá-la pelo título.');
+      if(/meta|referencia|referência|limite/.test(normalized))tips.push('Quando o valor só puder ser avaliado em relação a uma referência, apresente essa referência próxima ao indicador; não invente uma meta que não exista.');
+      if(!tips.length)tips.push('Período, unidade, atualização, fonte e referência devem aparecer quando forem necessários para interpretar corretamente o dado.');
+      appendTipList(wrap,'Orientação',tips);return wrap;
+    }
+
+    function languageNode(){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Linguagem e siglas</span><strong class="assistant-recommendation-title">Não presuma que todo público conhece a abreviação</strong><p>Se a sigla não for universal para o público do painel, apresente o significado na primeira ocorrência, em subtítulo, nota ou tooltip. O assistente também não deve inventar o significado de uma sigla desconhecida.</p>';return wrap;
+    }
+
+    function acronymNode(acronyms){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';const ac=acronyms[0];wrap.innerHTML=`<span class="assistant-recommendation-label">Termo não reconhecido</span><strong class="assistant-recommendation-title">Não vou presumir o significado de “${ac}”</strong><p>Posso orientar a visualização mesmo sem inventar a sigla. Se ela for específica da sua organização, informe o significado ou diga o que você quer fazer com esse indicador.</p>`;appendTipList(wrap,'Você pode continuar por',['Comparar categorias','Acompanhar evolução','Comparar com uma meta','Mostrar o valor atual']);return wrap;
+    }
+
+    function evaluateIdeaNode(text){
+      const normalized=normalizeAssistantText(text);const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Avaliação de ideia</span><strong class="assistant-recommendation-title">Revisão rápida pelo PortoUX</strong><p>A ideia pode funcionar, mas vale verificar se cada elemento tem uma função diferente e se a visão inicial mantém uma hierarquia clara.</p>';
+      const findings=[];
+      const kpiMatch=normalized.match(/(\d+)\s*kpis?/);if(kpiMatch&&Number(kpiMatch[1])>=6)findings.push(`${kpiMatch[1]} KPIs podem competir pela atenção se todos tiverem o mesmo destaque. Priorize os que precisam ser percebidos primeiro e deixe os demais em segundo nível.`);
+      if(/rosca|pizza/.test(normalized))findings.push('Rosca/pizza só faz sentido para parte-todo com poucas categorias. Para comparação precisa ou várias composições, barras tendem a ser mais simples.');
+      if(/tabela/.test(normalized))findings.push('Mantenha a tabela para detalhamento quando valores exatos forem necessários; evite fazê-la competir com a mensagem principal.');
+      if(/filtro/.test(normalized))findings.push('Se houver filtros, mantenha as seleções ativas e seus efeitos visíveis para preservar o contexto da análise.');
+      if(/muitas cores|varias cores|várias cores|cada.*cor/.test(normalized))findings.push('Evite atribuir uma cor forte a cada elemento sem necessidade; use cor com função e preserve a mesma codificação para o mesmo significado.');
+      if(!findings.length)findings.push('Verifique se há uma mensagem/pergunta principal clara.','Dê mais peso visual ao que precisa ser visto primeiro.','Retire ou mova para detalhe aquilo que não precisa estar na primeira visão.');
+      appendTipList(wrap,'Pontos de atenção',findings.slice(0,5));const note=document.createElement('small');note.className='assistant-context-note';note.textContent='Critérios aplicados: clareza, hierarquia, interação, acessibilidade e contexto decisório.';wrap.appendChild(note);return wrap;
+    }
+
+    function detectFieldHints(text){
+      const raw=(text||'').replace(/\n/g,',');
+      const normalized=normalizeAssistantText(raw);
+      const known=[
+        ['Data','temporal',['data','mes','mês','ano','periodo','período']],['Terminal','categoria',['terminal','terminais']],['Navio','categoria',['navio','navios','embarcacao','embarcação']],['Carga','categoria',['carga','tipo de carga']],['Status','estado',['status','situacao','situação','estado']],['Movimentação','medida',['movimentacao','movimentação','volume','quantidade movimentada']],['Tempo de espera','medida',['tempo de espera','espera']],['Tempo de permanência','medida',['tempo de permanencia','tempo de permanência','permanencia','permanência']],['Ocupação','medida',['ocupacao','ocupação']],['MPH','medida',['mph']],['Departamento','categoria',['departamento']],['Gestor','categoria',['gestor']],['Equipamento','categoria',['equipamento']]
+      ];
+      const found=[];known.forEach(([label,type,terms])=>{if(terms.some(t=>normalized.includes(normalizeAssistantText(t))))found.push({label,type})});
+      return found;
+    }
+
+    function panelFromFieldsNode(text){
+      const normalized=normalizeAssistantText(text);const fields=detectFieldHints(text);const wrap=document.createElement('div');wrap.className='assistant-recommendation';
+      wrap.innerHTML='<span class="assistant-recommendation-label">Montar meu painel</span><strong class="assistant-recommendation-title">Comece pelas perguntas que os dados precisam responder</strong><p>Não é necessário transformar cada campo em um gráfico. Use os campos para definir medidas, recortes, tempo e detalhamento, e selecione somente as visualizações que ajudam no objetivo do painel.</p>';
+      if(fields.length){const groups={temporal:[],medida:[],categoria:[],estado:[]};fields.forEach(f=>groups[f.type]?.push(f.label));const interpreted=[];if(groups.medida.length)interpreted.push('Medidas: '+groups.medida.join(', ')+'.');if(groups.categoria.length)interpreted.push('Categorias e recortes: '+groups.categoria.join(', ')+'.');if(groups.temporal.length)interpreted.push('Tempo: '+groups.temporal.join(', ')+'.');if(groups.estado.length)interpreted.push('Estado: '+groups.estado.join(', ')+'.');appendTipList(wrap,'Como interpretei os campos',interpreted)}
+      const analyses=[];
+      if(/moviment|volume|mph/.test(normalized)&&/(data|mes|mês|ano)/.test(normalized))analyses.push('Como a movimentação ou produtividade evolui ao longo do tempo?');
+      if(/terminal|departamento|equipamento|carga/.test(normalized)&&/(moviment|volume|mph|espera|perman|ocupacao|ocupação)/.test(normalized))analyses.push('Quais categorias apresentam os maiores e menores valores?');
+      if(/status|situacao|situação|estado/.test(normalized))analyses.push('Como as operações estão distribuídas entre os estados informados?');
+      if(/meta|limite|capacidade/.test(normalized))analyses.push('Quais medidas estão dentro ou fora da referência definida?');
+      if(!analyses.length)analyses.push('Qual é a situação geral que precisa ser entendida primeiro?','Quais categorias precisam ser comparadas?','Há evolução temporal ou registros que precisam de detalhamento?');
+      appendTipList(wrap,'O que seus dados permitem analisar',analyses.slice(0,4));
+      const structure=['Visão geral: destaque somente os indicadores essenciais para entender o cenário inicial.'];
+      if(/data|mes|mês|ano/.test(normalized))structure.push('Evolução: use linha quando a pergunta for acompanhar uma medida ao longo do tempo.');
+      if(/terminal|departamento|equipamento|carga|tipo/.test(normalized))structure.push('Comparações: use barras entre categorias; se não houver ordem natural, ordene do maior para o menor valor.');
+      if(/status|situacao|situação|estado/.test(normalized))structure.push('Status: se forem estados categóricos, como Em operação, Parado e Aguardando, trate-os como categorias. Gauge só deve ser considerado se o status vier de uma medida comparada a meta, limite, capacidade ou faixa conhecida.');
+      if(/navio|registro|detalhe|id|ticket|operacao|operação/.test(normalized))structure.push('Detalhamento: mantenha registros e atributos específicos em tabela ou segundo nível quando forem necessários para consulta.');
+      structure.push('Filtros: escolha apenas recortes úteis à exploração e mantenha as seleções ativas visíveis.');
+      appendTipList(wrap,'Estrutura sugerida',structure);
+      const note=document.createElement('small');note.className='assistant-context-note';note.textContent='O mesmo campo pode assumir representações diferentes conforme a pergunta. O PortoUX não recomenda um gráfico apenas pelo nome do campo.';wrap.appendChild(note);wrap.appendChild(assistantActionButtons(['Ver prévia do painel','Sugerir paleta','Revisar estrutura']));return wrap;
+    }
+
+    function gaugeStatusNode(){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Status e gauge</span><strong class="assistant-recommendation-title">Pode ser adequado, dependendo do que “status” representa</strong><p>Se o status vier de uma medida contínua comparada a uma meta, limite, capacidade ou faixa conhecida, o gauge pode ser considerado. Se forem estados como “Em operação”, “Parado” e “Aguardando”, prefira uma representação categórica.</p>';
+      appendTipList(wrap,'Exemplos',['Ocupação 78% com limite de 80%: gauge ou KPI com referência podem funcionar.','SLA 92% com meta de 95%: mostre valor e referência; gauge é uma opção, não uma obrigação.','Em operação / Parado / Aguardando: use categorias, não um gauge.']);return wrap;
+    }
+
+    function fallbackNode(){
+      const wrap=document.createElement('div');wrap.className='assistant-recommendation';wrap.innerHTML='<span class="assistant-recommendation-label">Limite da base</span><strong class="assistant-recommendation-title">Não encontrei uma diretriz específica para essa pergunta</strong><p>O PortoUX pode orientar escolha de visualizações, organização do painel, clareza visual, hierarquia, interação, acessibilidade e contextualização dos dados. Se a questão estiver relacionada a esses temas, reformule pelo objetivo da análise e eu tento orientar sem inventar uma regra.</p>';return wrap;
+    }
+
+    function buildVisualGuide(panel,category){
+      if(!category.visualGuide)return;
+      const section=document.createElement('section');section.className='visual-assistant';section.innerHTML=`<div class="visual-assistant-head"><div><span class="eyebrow">Assistente PortoUX</span><h3>Como posso ajudar com seu dashboard?</h3><p>Descreva o que precisa criar, informe os dados disponíveis ou conte uma ideia que queira revisar. O assistente aplica as regras do PortoUX sem IA generativa.</p></div><button type="button" class="assistant-new-chat" aria-label="Iniciar nova conversa">＋ Nova conversa</button></div>`;
+      const shell=document.createElement('div');shell.className='visual-assistant-shell';
+      const contextStrip=document.createElement('div');contextStrip.className='assistant-context-strip';contextStrip.hidden=true;
+      const chat=document.createElement('div');chat.className='visual-assistant-chat';chat.setAttribute('aria-live','polite');
+      const suggestions=document.createElement('div');suggestions.className='assistant-suggestions';
+      const form=document.createElement('form');form.className='visual-assistant-form';form.innerHTML='<label class="sr-only" for="visual-assistant-input">Descreva sua análise ou painel</label><input id="visual-assistant-input" type="text" autocomplete="off" placeholder="Descreva o painel que precisa criar ou informe os dados que possui."><button type="submit">Enviar</button>';
+      let conversationContext={lastQuestion:'',lastRule:null,panelContext:null,paletteIndex:0,activePalette:null,previewTheme:'dark',blueprint:null,mode:null,tags:[]};
+      const starterLabels=['Montar meu painel','Escolher visualização','Avaliar uma ideia','Melhorar uma visualização','Criar uma paleta','Painel para TV'];
+      const modeCopy={
+        'Montar meu painel':{message:'Conte o que você precisa acompanhar e, se souber, quais dados ou campos estão disponíveis. Não precisa definir os gráficos antes.',placeholder:'Ex.: Preciso criar um painel de SLA. Tenho data, departamento, chamados, percentual de SLA e meta.'},
+        'Escolher visualização':{message:'Diga o que você quer mostrar ou comparar. A visualização será escolhida pela pergunta analítica, não apenas pelo nome do campo.',placeholder:'Ex.: Quero comparar movimentação entre terminais.'},
+        'Avaliar uma ideia':{message:'Descreva como você pensou em organizar o painel. Ele não precisa estar pronto.',placeholder:'Ex.: Pensei em 8 KPIs no topo, duas roscas e uma tabela.'},
+        'Melhorar uma visualização':{message:'Descreva a visualização atual e o que está dificultando a leitura. Você não precisa saber o nome técnico do problema.',placeholder:'Ex.: Meu gráfico tem muitas categorias e cores e está difícil de comparar.'},
+        'Criar uma paleta':{message:'Posso sugerir uma paleta ou trabalhar a partir de uma cor que você já utiliza. Se já houver uma estrutura definida na conversa, a prévia respeitará essa estrutura.',placeholder:'Ex.: Quero uma paleta escura usando #176B87 como cor principal.'},
+        'Painel para TV':{message:'Conte quais informações precisam ser acompanhadas na TV. Vou priorizar leitura à distância, estado atual e independência de interação.',placeholder:'Ex.: Painel para TV com indicadores do dia e situações críticas.'}
+      };
+      function renderSuggestions(labels=starterLabels){suggestions.innerHTML='';labels.forEach(label=>{const button=document.createElement('button');button.type='button';button.className='assistant-suggestion';button.textContent=label;suggestions.appendChild(button)})}
+      function addTag(tag){if(tag&&!conversationContext.tags.includes(tag)){conversationContext.tags.push(tag);conversationContext.tags=conversationContext.tags.slice(-5)}}
+      function updateContextStrip(){
+        if(!conversationContext.tags.length){contextStrip.hidden=true;contextStrip.innerHTML='';return}
+        contextStrip.hidden=false;contextStrip.innerHTML='<span>Contexto atual:</span>';
+        conversationContext.tags.forEach(tag=>{const chip=document.createElement('button');chip.type='button';chip.className='assistant-context-chip';chip.dataset.removeContext=tag;chip.innerHTML=`${tag}<b aria-hidden="true">×</b>`;chip.setAttribute('aria-label',`Remover contexto ${tag}`);contextStrip.appendChild(chip)});
+      }
+      function activateMode(label){
+        const copy=modeCopy[label];if(!copy)return false;
+        conversationContext.mode=label;addTag(label);updateContextStrip();
+        addAssistantMessage(chat,'assistant',copy.message);renderSuggestions([]);
+        const input=form.querySelector('input');if(input){input.placeholder=copy.placeholder;input.focus()}return true;
+      }
+      function resetConversation(){
+        conversationContext={lastQuestion:'',lastRule:null,panelContext:null,paletteIndex:0,activePalette:null,previewTheme:'dark',blueprint:null,mode:null,tags:[]};chat.innerHTML='';updateContextStrip();
+        addAssistantMessage(chat,'assistant','Conte o painel que precisa montar, os dados que possui ou o que deseja analisar. Se houver contexto suficiente, eu respondo direto; se faltar algo decisivo, faço apenas uma pergunta curta.');
+        renderSuggestions();const input=form.querySelector('input');if(input){input.value='';input.placeholder='Descreva o painel que precisa criar ou informe os dados que possui.';input.focus()}
+      }
+      function refreshBlueprint(baseText=''){
+        const source=[conversationContext.lastQuestion,baseText].filter(Boolean).join(' ');
+        conversationContext.blueprint=buildPanelBlueprint(source,conversationContext.lastRule,conversationContext.panelContext);
+      }
+      function submitQuestion(question){
+        const clean=(question||'').trim();if(!clean)return;addAssistantMessage(chat,'user',clean);const normalized=normalizeAssistantText(clean);const portTerms=detectPortTerms(clean);const activeMode=conversationContext.mode;conversationContext.mode=null;
+        if(activeMode)addTag(activeMode);
+        if(/somente indicadores|apenas indicadores|so indicadores|somente kpi|apenas kpi|painel de indicadores/.test(normalized))addTag('Somente indicadores');
+        if(/tv|televisao|monitoramento/.test(normalized))addTag('Painel para TV');
+        if(/executivo|diretoria|gerencial/.test(normalized))addTag('Executivo');
+        if(/operacional|operacao|turno/.test(normalized))addTag('Operacional');
+        if(/mensal|por mes|mês|evolu|ao longo/.test(normalized))addTag('Evolução temporal');
+        if(/compar|por terminal|por departamento|ranking/.test(normalized))addTag('Comparação');
+        if(/meta|limite|capacidade|sla/.test(normalized))addTag('Meta / referência');
+        updateContextStrip();
+
+        if((/status/.test(normalized)&&/gauge|velocimetro|velocímetro/.test(normalized))||(/gauge|velocimetro|velocímetro/.test(normalized)&&/estado|situacao|situação/.test(normalized))){conversationContext.lastQuestion=clean;refreshBlueprint(clean);addAssistantMessage(chat,'assistant',gaugeStatusNode());renderSuggestions(['Ver prévia do painel','Sugerir paleta','Montar meu painel']);return}
+        if((/preciso|quero|gostaria|ajude/.test(normalized)&&/(montar|criar|fazer|estruturar).*(painel|dashboard)/.test(normalized)&&detectFieldHints(clean).length>=2)||(/tenho|campos|dados|informacoes|informações/.test(normalized)&&detectFieldHints(clean).length>=3)||activeMode==='Montar meu painel'){
+          conversationContext.lastQuestion=clean;conversationContext.panelContext=detectPanelContext(clean)||conversationContext.panelContext;refreshBlueprint(clean);addTag('Dados informados');updateContextStrip();addAssistantMessage(chat,'assistant',panelFromFieldsNode(clean));renderSuggestions(['Ver prévia do painel','Sugerir paleta','Avaliar uma ideia']);return
+        }
+        if(isBroadDashboardNeed(clean,activeMode)){
+          conversationContext.lastQuestion=clean;conversationContext.panelContext=detectPanelContext(clean)||conversationContext.panelContext;conversationContext.lastRule=null;refreshBlueprint(clean);addTag('Estrutura de painel');updateContextStrip();addAssistantMessage(chat,'assistant',dashboardNeedNode(clean,conversationContext.blueprint));renderSuggestions(['Ver prévia do painel','Sugerir paleta','Avaliar uma ideia']);return
+        }
+        if(/quantas?\s+(visualiz|graf|gráf)|numero de (visualiz|graf)|número de (visualiz|graf)|quantos? graficos|quantos? gráficos/.test(normalized)){addAssistantMessage(chat,'assistant',quantityRecommendationNode(clean));renderSuggestions(['Avaliar uma ideia','Sugerir paleta','Escolher visualização']);return}
+        if((/avaliar|avalie|minha ideia|estou pensando|pensei em|pretendo colocar|quero colocar/.test(normalized)&&/(painel|dashboard|kpi|graf|gráf|rosca|tabela|filtro)/.test(normalized))||(/\d+\s*kpis?/.test(normalized)&&/(rosca|tabela|graf|gráf|filtro)/.test(normalized))||activeMode==='Avaliar uma ideia'){
+          conversationContext.lastQuestion=clean;refreshBlueprint(clean);addAssistantMessage(chat,'assistant',evaluateIdeaNode(clean));renderSuggestions(['Ver prévia do painel','Sugerir paleta','Montar meu painel']);return
+        }
+        if(/paleta|hex|cores|cor principal|cor do painel|coloracao|coloração|azul|laranja|verde|turquesa|ciano|amarelo|ambar|âmbar|vermelho|coral|roxo|violeta|rosa|cinza/.test(normalized)||activeMode==='Criar uma paleta'){
+          const isAnother=/outra|nova|diferente|mais uma/.test(normalized);const custom=customPaletteFromText(clean);
+          if(/fundo claro|tema claro/.test(normalized))conversationContext.previewTheme='light';
+          if(/fundo escuro|tema escuro/.test(normalized))conversationContext.previewTheme='dark';
+          if(custom){conversationContext.activePalette=custom;addTag('Paleta personalizada')}
+          else if(isAnother){conversationContext.paletteIndex=(conversationContext.paletteIndex+1)%PORTOUX_PALETTES.length;conversationContext.activePalette=PORTOUX_PALETTES[conversationContext.paletteIndex]}
+          else if(/categor|series|séries/.test(normalized)){conversationContext.paletteIndex=2;conversationContext.activePalette=PORTOUX_PALETTES[2]}
+          else if(!conversationContext.activePalette)conversationContext.activePalette=PORTOUX_PALETTES[conversationContext.paletteIndex];
+          refreshBlueprint();updateContextStrip();addAssistantMessage(chat,'assistant',paletteNode(clean,conversationContext.paletteIndex,conversationContext));renderSuggestions(['Outra paleta','Ver prévia do painel','Revisar estrutura']);return
+        }
+        if(/grid|grade|borda|legenda|eixo|escala|tipografia|fonte do graf|fonte no graf/.test(normalized)||activeMode==='Melhorar uma visualização'){conversationContext.lastQuestion=clean;addAssistantMessage(chat,'assistant',visualCleanupNode(normalized));renderSuggestions(['Sugerir paleta','Avaliar uma ideia','Escolher visualização']);return}
+        if(/normal|critico|crítico|alerta|desvio|fila|congestionamento|estado atual|situacao atual|situação atual/.test(normalized)&&portTerms.length){addAssistantMessage(chat,'assistant',stateExceptionNode());renderSuggestions(['Painel para TV','Acompanhar evolução','Comparar categorias']);return}
+        if(/visao geral|visão geral|granularidade|nivel de analise|nível de análise|detalhamento por|consolidado.*por/.test(normalized)){addAssistantMessage(chat,'assistant',levelsNode());return}
+        const panelContext=detectPanelContext(clean);if(panelContext){conversationContext.panelContext=panelContext;conversationContext.lastQuestion=clean;addTag(panelContext.label);refreshBlueprint(clean);updateContextStrip();addAssistantMessage(chat,'assistant',panelRecommendationNode(panelContext,portTerms,clean));renderSuggestions(['Ver prévia do painel','Sugerir paleta','Avaliar uma ideia']);return}
+        if(/ultima atualizacao|última atualização|atualizacao|atualização|fonte dos dados|periodo do indicador|período do indicador|unidade do indicador/.test(normalized)){addAssistantMessage(chat,'assistant',dataContextNode(normalized));renderSuggestions(['Escolher visualização','Painel para TV','Avaliar uma ideia']);return}
+        if(/sigla|abreviacao|abreviação|acronimo|acrônimo/.test(normalized)){addAssistantMessage(chat,'assistant',languageNode());return}
+        const unknown=detectUnknownAcronyms(clean);if(unknown.length){addAssistantMessage(chat,'assistant',acronymNode(unknown));renderSuggestions(['Comparar categorias','Acompanhar evolução','Meta × realizado','Mostrar valor atual']);return}
+        const expanded=conversationContext.lastQuestion&&/^(e |e se|tambem|também|agora|nesse caso|e para)/i.test(clean)?`${conversationContext.lastQuestion} ${clean}`:clean;
+        const result=analyzeVisualizationQuestion(expanded);if(result.type==='recommendation'){conversationContext.lastQuestion=expanded;conversationContext.lastRule=result.rule;addTag(result.rule.intent);refreshBlueprint(expanded);updateContextStrip();addAssistantMessage(chat,'assistant',recommendationNode(result.rule,expanded));renderSuggestions(['Ver prévia do painel','Sugerir paleta','Avaliar uma ideia']);return}
+        const clarification=document.createElement('div');const textNode=document.createElement('p');textNode.textContent=result.message;clarification.appendChild(textNode);const options=document.createElement('div');options.className='assistant-inline-options';result.options.forEach(option=>{const btn=document.createElement('button');btn.type='button';btn.textContent=option;btn.addEventListener('click',()=>submitQuestion(option));options.appendChild(btn)});clarification.appendChild(options);addAssistantMessage(chat,'assistant',clarification);
+      }
+      function handleAction(label){
+        if(activateMode(label))return;
+        if(label==='Outra paleta'){submitQuestion('Quero outra sugestão de paleta');return}
+        if(label==='Sugerir paleta'||label==='Criar uma paleta'){submitQuestion('Sugira uma paleta para este painel');return}
+        if(label==='Ver prévia do painel'){refreshBlueprint();addAssistantMessage(chat,'assistant',previewOnlyNode(conversationContext));renderSuggestions(['Sugerir paleta','Revisar estrutura']);return}
+        if(label==='Revisar estrutura'){activateMode('Avaliar uma ideia');return}
+        if(label==='Acompanhar evolução'||label==='Comparar categorias'||label==='Meta × realizado'||label==='Consultar detalhes'||label==='Mostrar valor atual'){submitQuestion(label);return}
+        submitQuestion(label);
+      }
+      suggestions.addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;handleAction(button.textContent)});
+      chat.addEventListener('click',event=>{
+        const themeBtn=event.target.closest('[data-preview-theme]');if(themeBtn){conversationContext.previewTheme=themeBtn.dataset.previewTheme;addTag(conversationContext.previewTheme==='dark'?'Tema escuro':'Tema claro');updateContextStrip();addAssistantMessage(chat,'assistant',previewOnlyNode(conversationContext));return}
+        const action=event.target.closest('[data-assistant-action]');if(action){handleAction(action.dataset.assistantAction);return}
+      });
+      contextStrip.addEventListener('click',event=>{const btn=event.target.closest('[data-remove-context]');if(!btn)return;conversationContext.tags=conversationContext.tags.filter(t=>t!==btn.dataset.removeContext);updateContextStrip()});
+      form.addEventListener('submit',event=>{event.preventDefault();const input=form.querySelector('input');submitQuestion(input.value);input.value='';input.focus()});section.querySelector('.assistant-new-chat').addEventListener('click',resetConversation);
+      shell.append(contextStrip,chat,suggestions,form);section.appendChild(shell);panel.appendChild(section);resetConversation();
+    }
+
+
+    function createPracticeSection(title, items, className) {
+      const section = document.createElement('section');
+      section.className = `practice-section ${className}`;
+      section.innerHTML = `<h5 class="practice-title">${title}</h5><ul class="practice-list">${items.map(item=>`<li>${item}</li>`).join('')}</ul>`;
+      return section;
+    }
+
+    function createGuidelineCard(child, index, category) {
+      const article = document.createElement('article');
+      article.className = 'chart-card';
+      article.innerHTML = `
+        <div class="card-icon-stage" style="height:180px;min-height:180px"><img src="${child.image}" alt="Ilustração da diretriz ${child.name}" loading="lazy" style="width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;object-position:center"></div>
+        <h4 class="chart-name">${child.name}</h4>
+        <p class="chart-description">${child.description}</p>
+        ${child.usePara ? `<p class="chart-use"><strong>Use para</strong><span>${child.usePara}</span></p>` : ''}
+        <div class="practices-container"></div>`;
+
+      const details = article.querySelector('.practices-container');
+      details.appendChild(createPracticeSection('Faça',child.faca,'do-section'));
+      details.appendChild(createPracticeSection('Evite',child.evite,'dont-section'));
+      return article;
+    }
+
+    function toggleCategory(category, triggerNode) {
+      const infoPanel = document.getElementById('info-panel');
+      const buttons = document.querySelectorAll('.category-button-html');
+      const sameOpen = currentOpenCategory === category.id;
+      buttons.forEach(btn=>{ btn.classList.remove('active'); btn.setAttribute('aria-selected','false'); });
+
+      if (sameOpen) {
+        infoPanel.classList.remove('open');
+        infoPanel.innerHTML = '';
+        currentOpenCategory = null;
+        document.body.classList.add('home-state');
+        return;
+      }
+
+      currentOpenCategory = category.id;
+      document.body.classList.remove('home-state');
+      triggerNode.classList.add('active');
+      triggerNode.setAttribute('aria-selected','true');
+      infoPanel.innerHTML = '';
+
+      const panel = document.createElement('section');
+      panel.className = 'info-panel-content';
+      panel.id = `panel-${category.id}`;
+      panel.setAttribute('role','tabpanel');
+      panel.setAttribute('aria-labelledby',`tab-${category.id}`);
+      panel.style.setProperty('--category-color',category.colour);
+
+      const intro = document.createElement('div');
+      intro.className = 'panel-intro';
+      intro.innerHTML = `<div class="panel-kicker">${category.id}</div><h2 class="panel-title">${category.category}</h2><p class="panel-description">${category.description}</p>${category.note ? `<p class="panel-note">${category.note}</p>` : ''}`;
+      panel.appendChild(intro);
+
+      const example = document.createElement('button');
+      example.type = 'button';
+      example.className = 'panel-example example-trigger';
+      example.dataset.img = category.example.img;
+      example.dataset.caption = category.example.text;
+      example.innerHTML = `<img class="example-thumb" src="${category.example.img}" alt="Prévia do exemplo aplicado de ${category.category}"><span class="example-copy"><span class="example-label">Exemplo aplicado</span><span class="example-text">${category.example.text}</span><small>Exemplo ilustrativo. A configuração não constitui um modelo obrigatório de dashboard.</small></span><span class="view-example">Ampliar ↗</span>`;
+      panel.appendChild(example);
+
+      const heading = document.createElement('div');
+      heading.className = 'cards-heading';
+      heading.innerHTML = '<span class="eyebrow">Diretrizes do PortoUX</span><h3>O que observar</h3>';
+      panel.appendChild(heading);
+
+      const cards = document.createElement('div');
+      cards.className = 'cards-container';
+      category.children.forEach((child,index)=>cards.appendChild(createGuidelineCard(child,index,category)));
+      panel.appendChild(cards);
+      buildVisualGuide(panel,category);
+
+      infoPanel.appendChild(panel);
+      infoPanel.classList.add('open');
+      requestAnimationFrame(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}));
+    }
+
+    function setupModal() {
+      const modal = document.getElementById('image-modal');
+      const modalImg = modal.querySelector('.image-modal-img');
+      const modalCaption = modal.querySelector('.image-modal-caption');
+      const closeBtn = modal.querySelector('.image-modal-close');
+      function openModal(trigger){
+        lastModalTrigger=trigger;
+        modalImg.src=trigger.dataset.img;
+        modalCaption.textContent=trigger.dataset.caption;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden','false');
+        document.body.classList.add('modal-open');
+        closeBtn.focus();
+      }
+      function closeModal(){
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden','true');
+        document.body.classList.remove('modal-open');
+        modalImg.src='';
+        if(lastModalTrigger) lastModalTrigger.focus();
+      }
+      document.addEventListener('click',event=>{
+        const trigger=event.target.closest('.example-trigger');
+        if(trigger) openModal(trigger);
+      });
+      closeBtn.addEventListener('click',closeModal);
+      modal.addEventListener('click',event=>{if(event.target===modal)closeModal();});
+      document.addEventListener('keydown',event=>{if(event.key==='Escape'&&modal.classList.contains('active'))closeModal();});
+    }
+
+    document.body.classList.add('home-state');
+    createCategoryNav();
+    setupModal();
+  </script>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

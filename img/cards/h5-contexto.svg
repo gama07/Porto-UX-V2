@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Contextualização do indicador">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<text x="20" y="49" fill="#93a3b8" font-family="Arial" font-size="9">TEMPO MÉDIO DE ESPERA</text><text x="20" y="80" fill="#fff" font-family="Arial" font-size="29" font-weight="800">4,2 h</text><text x="20" y="102" fill="#d4a363" font-family="Arial" font-size="10">Últimas 24 h · Terminal A</text><rect x="191" y="51" width="105" height="48" rx="9" fill="#132a3e"/><text x="203" y="69" fill="#93a3b8" font-family="Arial" font-size="9">META</text><text x="203" y="90" fill="#fff" font-family="Arial" font-size="17" font-weight="800">≤ 5,0 h</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

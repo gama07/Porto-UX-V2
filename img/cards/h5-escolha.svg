@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Escolha da representação visual">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<text x="20" y="49" fill="#93a3b8" font-family="Arial" font-size="9">PERGUNTA</text><text x="20" y="66" fill="#eaf2ff" font-family="Arial" font-size="11" font-weight="700">Como a espera mudou ao longo do tempo?</text><path d="M25 105L25 78M25 105h265" stroke="#71849a" stroke-width="1.5"/><polyline points="36,99 76,91 116,94 156,75 196,83 236,62 280,70" fill="none" stroke="#e89a3c" stroke-width="3"/><text x="250" y="48" fill="#e89a3c" font-family="Arial" font-size="9" font-weight="700">LINHA</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>

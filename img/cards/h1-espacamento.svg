@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Espaçamento e respiro">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="24" y="45" width="80" height="55" rx="9" fill="#132a3e"/><text x="36" y="66" fill="#eaf2ff" font-family="Arial" font-size="10" font-weight="700">KPI</text><text x="36" y="89" fill="#4A90E2" font-family="Arial" font-size="18" font-weight="800">82%</text><rect x="120" y="45" width="80" height="55" rx="9" fill="#132a3e"/><text x="132" y="66" fill="#eaf2ff" font-family="Arial" font-size="10" font-weight="700">KPI</text><text x="132" y="89" fill="#4A90E2" font-family="Arial" font-size="18" font-weight="800">14</text><rect x="216" y="45" width="80" height="55" rx="9" fill="#132a3e"/><text x="228" y="66" fill="#eaf2ff" font-family="Arial" font-size="10" font-weight="700">KPI</text><text x="228" y="89" fill="#4A90E2" font-family="Arial" font-size="18" font-weight="800">4,2h</text><path d="M104 73h16M200 73h16" stroke="#71849a" stroke-width="2" stroke-dasharray="3 3"/>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#4A90E2"/>
+</svg>

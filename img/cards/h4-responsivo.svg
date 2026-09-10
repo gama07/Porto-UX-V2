@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Design responsivo">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="24" y="43" width="172" height="72" rx="10" fill="#132a3e" stroke="#71849a"/><rect x="35" y="54" width="150" height="15" rx="5" fill="#2f1e24"/><rect x="35" y="77" width="70" height="27" rx="5" fill="#1d3144"/><rect x="115" y="77" width="70" height="27" rx="5" fill="#1d3144"/><rect x="224" y="47" width="60" height="64" rx="10" fill="#132a3e" stroke="#71849a"/><rect x="233" y="57" width="42" height="14" rx="5" fill="#2f1e24"/><rect x="233" y="79" width="42" height="23" rx="5" fill="#1d3144"/><path d="M201 79h16" stroke="#e45d5d" stroke-width="2"/><path d="M212 74l6 5-6 5" fill="#e45d5d"/>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E45D5D"/>
+</svg>

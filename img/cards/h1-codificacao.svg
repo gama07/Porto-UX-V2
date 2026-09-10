@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Codificação visual consistente">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<text x="20" y="51" fill="#93a3b8" font-family="Arial" font-size="10">MESMO SIGNIFICADO</text><circle cx="48" cy="78" r="8" fill="#4A90E2"/><text x="64" y="82" fill="#dce8f6" font-family="Arial" font-size="11">Contêiner</text><circle cx="48" cy="105" r="8" fill="#e89a3c"/><text x="64" y="109" fill="#dce8f6" font-family="Arial" font-size="11">Granel</text><rect x="176" y="66" width="112" height="18" rx="6" fill="#132a3e"/><circle cx="190" cy="75" r="6" fill="#4A90E2"/><text x="204" y="79" fill="#dce8f6" font-family="Arial" font-size="10">Contêiner</text><rect x="176" y="94" width="112" height="18" rx="6" fill="#132a3e"/><circle cx="190" cy="103" r="6" fill="#e89a3c"/><text x="204" y="107" fill="#dce8f6" font-family="Arial" font-size="10">Granel</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#4A90E2"/>
+</svg>

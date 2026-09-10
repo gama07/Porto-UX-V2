@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Estrutura em camadas ou abas">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="22" y="45" width="276" height="65" rx="10" fill="#132a3e"/><rect x="28" y="50" width="72" height="20" rx="7" fill="#50c878"/><text x="64" y="64" fill="#071b12" font-family="Arial" font-size="9" font-weight="800" text-anchor="middle">VISÃO GERAL</text><rect x="104" y="50" width="60" height="20" rx="7" fill="#1e3447"/><text x="134" y="64" fill="#c8d6e4" font-family="Arial" font-size="9" text-anchor="middle">CARGA</text><rect x="168" y="50" width="72" height="20" rx="7" fill="#1e3447"/><text x="204" y="64" fill="#c8d6e4" font-family="Arial" font-size="9" text-anchor="middle">TERMINAIS</text><rect x="244" y="50" width="48" height="20" rx="7" fill="#1e3447"/><text x="268" y="64" fill="#c8d6e4" font-family="Arial" font-size="9" text-anchor="middle">ETA</text><rect x="34" y="80" width="248" height="22" rx="6" fill="#18372b"/><text x="46" y="95" fill="#a8dcbc" font-family="Arial" font-size="10">conteúdo da camada selecionada</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#50C878"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Rótulos e alinhamento">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<text x="22" y="50" fill="#93a3b8" font-family="Arial" font-size="9">TERMINAL</text><text x="290" y="50" fill="#93a3b8" font-family="Arial" font-size="9" text-anchor="end">MOV. (mil t)</text><line x1="22" y1="58" x2="296" y2="58" stroke="#294158"/><text x="22" y="77" fill="#dce8f6" font-family="Arial" font-size="11">Santos</text><text x="290" y="77" fill="#dce8f6" font-family="Arial" font-size="11" text-anchor="end">384,2</text><text x="22" y="98" fill="#dce8f6" font-family="Arial" font-size="11">Paranaguá</text><text x="290" y="98" fill="#dce8f6" font-family="Arial" font-size="11" text-anchor="end">271,8</text><text x="22" y="119" fill="#dce8f6" font-family="Arial" font-size="11">Itaguaí</text><text x="290" y="119" fill="#dce8f6" font-family="Arial" font-size="11" text-anchor="end">204,5</text>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#50C878"/>
+</svg>

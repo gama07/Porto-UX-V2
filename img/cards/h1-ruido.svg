@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Redução de ruído visual">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="20" y="44" width="132" height="70" rx="10" fill="#132a3e"/><text x="32" y="62" fill="#e45d5d" font-family="Arial" font-size="10" font-weight="700">ANTES</text><line x1="32" y1="75" x2="137" y2="75" stroke="#6d8298" stroke-dasharray="2 3"/><line x1="32" y1="88" x2="137" y2="88" stroke="#6d8298"/><rect x="35" y="70" width="14" height="36" fill="#9b59b6"/><circle cx="91" cy="91" r="15" fill="#e89a3c"/><rect x="168" y="44" width="132" height="70" rx="10" fill="#132a3e"/><text x="180" y="62" fill="#50c878" font-family="Arial" font-size="10" font-weight="700">DEPOIS</text><rect x="184" y="84" width="18" height="22" rx="3" fill="#4A90E2"/><rect x="212" y="70" width="18" height="36" rx="3" fill="#4A90E2"/><rect x="240" y="91" width="18" height="15" rx="3" fill="#4A90E2"/>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#4A90E2"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Exploração intuitiva">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<rect x="20" y="45" width="280" height="67" rx="10" fill="#132a3e"/><rect x="32" y="56" width="20" height="42" rx="4" fill="#9b59b6"/><rect x="62" y="68" width="20" height="30" rx="4" fill="#9b59b6" opacity=".8"/><rect x="92" y="75" width="20" height="23" rx="4" fill="#9b59b6" opacity=".65"/><rect x="122" y="62" width="20" height="36" rx="4" fill="#9b59b6" opacity=".75"/><rect x="155" y="54" width="124" height="45" rx="8" fill="#1e3447"/><text x="167" y="70" fill="#bda4d4" font-family="Arial" font-size="9">TOOLTIP</text><text x="167" y="86" fill="#fff" font-family="Arial" font-size="11" font-weight="700">Terminal A · 384,2 mil t</text><path d="M145 77h10" stroke="#9b59b6" stroke-width="2"/>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#9B59B6"/>
+</svg>

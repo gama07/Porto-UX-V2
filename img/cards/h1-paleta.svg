@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Paleta semântica">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<g><rect x="22" y="48" width="84" height="56" rx="10" fill="#132a3e"/><circle cx="44" cy="68" r="8" fill="#50c878"/><text x="60" y="72" fill="#eaf2ff" font-family="Arial" font-size="12" font-weight="700">Normal</text><rect x="118" y="48" width="84" height="56" rx="10" fill="#132a3e"/><circle cx="140" cy="68" r="8" fill="#e89a3c"/><text x="156" y="72" fill="#eaf2ff" font-family="Arial" font-size="12" font-weight="700">Atenção</text><rect x="214" y="48" width="84" height="56" rx="10" fill="#132a3e"/><path d="M236 60l10 18h-20z" fill="#e45d5d"/><text x="252" y="72" fill="#eaf2ff" font-family="Arial" font-size="12" font-weight="700">Alerta</text><text x="22" y="120" fill="#93a3b8" font-family="Arial" font-size="10">cor + texto + forma</text></g>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#4A90E2"/>
+</svg>

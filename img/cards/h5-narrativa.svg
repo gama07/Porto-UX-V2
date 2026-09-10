@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150" role="img" aria-label="Narrativa e anotações">
+<rect width="320" height="150" rx="18" fill="#0f1d2d"/>
+<rect x="1" y="1" width="318" height="148" rx="17" fill="none" stroke="#294158"/>
+
+<path d="M24 108V48M24 108h274" stroke="#71849a" stroke-width="1.5"/><polyline points="36,94 76,88 116,90 156,58 196,78 236,73 282,66" fill="none" stroke="#e89a3c" stroke-width="3"/><circle cx="156" cy="58" r="5" fill="#e89a3c"/><rect x="172" y="40" width="110" height="29" rx="7" fill="#2b241d" stroke="#e89a3c"/><text x="182" y="52" fill="#f3c58d" font-family="Arial" font-size="8" font-weight="700">PARALISAÇÃO</text><text x="182" y="64" fill="#dce8f6" font-family="Arial" font-size="8">+31% na espera</text><path d="M172 61l-11 0" stroke="#e89a3c"/>
+<rect x="18" y="132" width="64" height="3" rx="1.5" fill="#E89A3C"/>
+</svg>
